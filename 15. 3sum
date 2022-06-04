@@ -1,0 +1,47 @@
+"""Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] 
+such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+Notice that the solution set must not contain duplicate triplets."""
+"""要找出三个数且和为0，那么除了三个数全是0的情况之外，肯定会有负数和正数，还是要先 fix 一个数，然后去找另外两个数，只要找到两个数且和为第一个 fix 数的相反数就行了。
+剪枝优化：当遍历到正数的时候就 break，因为数组是有序的，如果第一个要 fix 的数就是正数了，则后面的数字就都是正数，不可能出现和为0的情况。
+用两个指针分别指向 fix 数字之后开始的数组首尾两个数。
+如果三数之和小于0，则将左边指针右移一位，使得指向的数字增大一些；
+如果三数之和大于0，则将右边指针左移一位，使得指向的数字减小一些；
+如果三个数和正好为0，则将三个数一起存入结果中。
+然后就是跳过重复数字的步骤了，两个指针都需要检测重复数字"""
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        nums.sort() #won't change complexity, put duplicate values together
+        for i in range(len(nums)-2): # need at least 3 numbers to continue
+            if i > 0 and nums[i] == nums[i-1]:#从第二个开始，跟前一个比 
+                continue #重复的话就去下一个i
+            l, r = i+1, len(nums)-1 #i跟前一个不重复就在i后面设俩指针
+            while l < r:
+                sum = nums[i] + nums[l] + nums[r]
+                if sum < 0: #说明三数太小，需要右移
+                    l +=1 
+                elif sum > 0: ##说明三数太大，需要左移
+                    r -= 1
+                else:
+                    res.append((nums[i], nums[l], nums[r]))
+                    while l < r and nums[l] == nums[l+1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r-1]:
+                        r -= 1
+                    l += 1; r -= 1
+        return res
+ 
+ 
+ class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        res, dups = set(), set()
+        seen = {}
+        for i, val1 in enumerate(nums):
+            if val1 not in dups:
+                dups.add(val1)
+                for j, val2 in enumerate(nums[i+1:]):
+                    complement = -val1 - val2
+                    if complement in seen and seen[complement] == i:
+                        res.add(tuple(sorted((val1, val2, complement))))
+                    seen[val2] = i
+        return res
