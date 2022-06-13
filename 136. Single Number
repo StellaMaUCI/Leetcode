@@ -1,0 +1,32 @@
+"""Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+You must implement a solution with a linear runtime complexity and use only constant extra space."""
+
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        arr = []
+        for num in nums:
+            if num not in new_array:
+                arr.append(num)
+            else:
+                arr.remove(num)
+        return arr.pop() 
+        #pop(index)就得index。没有index就是list最后一个数先pop出来，然后pop下一个。这里应该只有一个数所以pop一次就完了
+        
+from collections import defaultdict
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        dic = defaultdict(int) #参数1是键值，参数2是默认值，
+        # 每次调用都有一个返回值，如果字典中不存在该key则返回默认值，如果存在该key则返回该值，利用返回值可再次修改代码。
+        for i in nums:
+            dic[i] += 1
+        
+        for i in hash_table:
+            if dic[i] == 1:
+                return i
+                
+
+class Solution(object): # 2∗(a+b+c)−(a+a+b+b+c)=c
+     def singleNumber(self, nums: List[int]) -> int:
+        return 2 * sum(set(nums)) - sum(nums)
+              
+              
