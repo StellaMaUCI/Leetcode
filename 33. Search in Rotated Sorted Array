@@ -5,6 +5,8 @@ Prior to being passed to your function, nums is possibly rotated at an unknown p
 Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
 
 You must write an algorithm with O(log n) runtime complexity."""
+# 不用考虑原来的数组和原来的pivot或者哪一个是第一个数，etc.
+# 只考虑新数组有两部分, 设左右两个ptr，不停的二分出mid，直到跟target相等为止
 
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
@@ -15,19 +17,23 @@ class Solution:
             
             if target == nums[m]:
                 return m
-            
-            # left sorted
-            if nums[l] <= nums[m]:
-                if target < nums[m] and target >= nums[l]:
-                    r = m - 1
-                else:
-                    l = m + 1
-            # right sorted
-            else:
-                if target > nums[m] and target <= nums[r]:
+                
+            # 关键在于获得了中间数后，判断下面要搜索左半段还是右半段
+            if nums[l] <= nums[m]: #左半段l-m
+                if nums[l] <= target < nums[m]: # target在l和m之间
+                    r = m - 1 # r缩短到m左边的数形成新的小数组
+                else: # target不在l和m之间
+                    l = m + 1 # l缩短到m右边的数形成新的小数组
+            else: # 右半段m-r
+                if nums[m] < target <= nums[r]:
                     l = m + 1
                 else:
                     r = m - 1
             
         return -1
-       
+     
+     def search(self, nums: List[int], target: int) -> int:
+        if target in nums:
+            return nums.index(target)
+        else:
+            return -1
