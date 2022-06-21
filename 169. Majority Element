@@ -1,0 +1,40 @@
+"""Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+ 
+
+Example 1:
+
+Input: nums = [3,2,3]
+Output: 3
+Example 2:
+
+Input: nums = [2,2,1,1,1,2,2]
+Output: 2
+"""
+# Boyer–Moore majority vote algorithm
+    # the majority element always exists in the array. 
+    # 将第一个数假设为major，count major，遇到同样的数，count自增1，否则自减1，
+    # 如果计数器减到了0，则更换下一个数字为候选者。
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        count = 0 
+        for num in nums:
+            if count == 0: 
+                major = num  
+                count += 1
+            elif num == major:  
+                count += 1
+            else:   
+                count -= 1 
+        return major
+    
+ 
+ # Cheating Solution:   
+ class Solution:
+    def majorityElement(self, nums):
+        counts = collections.Counter(nums)
+        return max(counts.keys(), key=counts.get)
+        
+ 
