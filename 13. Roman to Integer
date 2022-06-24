@@ -37,16 +37,19 @@ class Solution:
         return number
 
 
-# 1,The last letter is always added. 
-# 2, If one letter is less than its latter one, this letter is subtracted.
+# 1, The last letter is always added. 
+# 2, If one letter is bigger or equal than than its latter one, it is added; otherwise, subtracted.
 class Solution:
-    def romanToInt(self, s):
-        roman = {'M': 1000,'D': 500 ,'C': 100,'L': 50,'X': 10,'V': 5,'I': 1}
+    def romanToInt(self, s: str) -> int:
         sum = 0
-        for i in range(0, len(s) - 1):
-            if roman[s[i]] < roman[s[i+1]]:
-                sum -= roman[s[i]]
+        dict = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        for i in range(len(s)):
+            if i == len(s)-1 :
+                sum += dict[s[i]]
+            elif dict[s[i]] >= dict[s[i+1]]:
+                sum += dict[s[i]]
             else:
-                sum += roman[s[i]]
-        return sum + roman[s[-1]]
+                sum -= dict[s[i]]
+        return   sum
+    
 
