@@ -1,4 +1,6 @@
 """Given two strings text1 and text2, return the length of their longest common subsequence. 
+A subsequence of a string is a new string generated from the original string with some characters
+(can be none) deleted without changing the relative order of the remaining characters.
 If there is no common subsequence, return 0.
 
 Example 1:
@@ -10,3 +12,38 @@ Input: text1 = "abc", text2 = "abc"
 Output: 3
 """
 
+# Wrong! Relative order changed. Subsequence is neither subarray nor same letters!! 
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        res = []
+        for i in text1:
+            if i in text2:
+                res.append(i)
+        return len(res)
+        
+# Right! 用动态规划 Dynamic Programing 来做（数多少个用动态规划，列出所有方法或者路径用递归），
+# 使用一个二维数组aa，其中 aa[i][j] 表示 text1 的前i个字符和 text2 的前j个字符的最长相同的子序列的字符个数，
+# 大小初始化为 (m+1)x(n+1)，这里的m和n分别是 text1 和 text2 的长度。
+# 接下来就要找状态转移方程了，如何来更新 aa[i][j]，若二者对应位置的字符相同，表示当前的 LCS 又增加了一位，所以可以用 aa[i-1][j-1] + 1 来更新 aa[i][j]。
+# 否则若对应位置的字符不相同，由于是子序列，还可以错位比较，可以分别从 text1 或者 text2 去掉一个当前字符，就是 aa[i-1][j] 和 aa[i][j-1]，
+# 取二者中的较大值来更新 aa[i][j] 即可，最终的结果保存在了 aa[m][n] 中
+from functools import lru_cache
+
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        
+        @lru_cache(maxsize=None)
+        def memo_solve(ptr1, ptr2):
+            if ptr1 == len(text1) or ptr2 == len(text2):
+                return 0
+            
+            # Case 1
+            if text1[ptr1] == text2[ptr2]:
+                return 1 + memo_solve(ptr1+1, ptr2+1)
+        
+            # Case 2
+            else:     
+                return max(memo_solve(ptr1+1, ptr2), memo_solve(ptr1,ptr2+1))
+                       # ^    # ^ Case 2 - Option 1           ^ Case 2 - Option 2
+					   # | __You want the max() result from resulting branches in the tree 
+        return memo_solve(0,0) # Start the recursion stack from str1[0] and str2[0]						
