@@ -1,0 +1,27 @@
+"""Given the head of a singly linked list, return the middle node of the linked list.
+If there are two middle nodes, return the second middle node."""
+
+class Solution:
+    def middleNode(self, head):
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+        
+"""
+class Solution: 
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        a = []
+        cur = head
+        while cur is not None:
+            a.append(cur.val) # 追加的是int不是str
+            cur = cur.next # next不能用。234可以这样用因为是str
+        return a[len(a)//2] """
+    
+class Solution:
+    def middleNode(self, head: ListNode) -> ListNode:
+        arr = [head]
+        while arr[-1].next:
+            arr.append(arr[-1].next)
+        return arr[len(arr) // 2]
