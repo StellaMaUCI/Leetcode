@@ -32,7 +32,7 @@ from functools import lru_cache
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         
-        @lru_cache(maxsize=None)
+        @lru_cache(maxsize=None) # 参数maxsize（最大可缓存结果数量）：默认值128，None可以缓存无限结果；typed默认False，为true时，不同类型参数将被分别缓存。
         def memo_solve(ptr1, ptr2):
             if ptr1 == len(text1) or ptr2 == len(text2):
                 return 0
