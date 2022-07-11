@@ -63,6 +63,6 @@ class Solution:
     # get the longest palindrome, l, r are the middle indexes   
     # from inner to outer
     def helper(self, s, l, r):
-        while l >= 0 and r < len(s) and s[l] == s[r]:
+        while l >= 0 and r < len(s) and s[l] == s[r]: #当s[r]的r是最后一位+1时，因为r<len(s)到不了此判断，所以不报错
             l -= 1; r += 1
-        return s[l+1:r]
+        return s[l+1:r] #当s[l+1:r]的r是最后一位+1时，因为切片右端不包括，所以也不报错
