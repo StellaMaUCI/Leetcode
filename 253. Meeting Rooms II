@@ -25,17 +25,15 @@ class Solution:
         free_rooms = []
         # Sort the meetings in increasing order of their start time.
         intervals.sort(key= lambda x: x[0])
-        # Add the first meeting. We have to give a new room to the first meeting.
-        heapq.heappush(free_rooms, intervals[0][1])
+        # Add the first meeting. intervals[0][1] is the 2nd element of 1st array in intervals tuple.
+        heapq.heappush(free_rooms, intervals[0][1]) 
 
         # For all the remaining meeting rooms
         for i in intervals[1:]:
-            # If the room due to free up the earliest is free, assign that room to this meeting.
+            # If free_rooms 1st less than intervals[1:][0], it's free for new allocation.
             if free_rooms[0] <= i[0]:
-                heapq.heappop(free_rooms)
-
-            # If a new room is to be assigned, then also we add to the heap,
-            # If an old room is allocated, then also we have to add to the heap with updated end time.
+                heapq.heappop(free_rooms) # Pop and return the smallest item from the heap
+            # If a new room is to be assigned, add to the heap; If an old room is allocated, add to the heap with updated end time.
             heapq.heappush(free_rooms, i[1])
 
         # The size of the heap tells us the minimum rooms required for all the meetings.
