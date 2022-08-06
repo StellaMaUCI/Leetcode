@@ -25,22 +25,24 @@ Output: [8,9,9,9,0,0,0,1]
 #         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-    # Without dummyhead,  need extra conditional statements to initialize the head's value 
+    # Without dummyhead, need extra conditional statements to initialize the head's value 
         dummyHead = ListNode(0) # Initialize dummyhead of the returning list
-        curr = dummyHead # current node 
-        carry = 0 # Initialize carry to 0
+        curr = dummyHead 
+        carry = 0 
         
-    #  Loop through lists l1l1 and l2l2 until reach both ends and crarry is 0
+    #  Loop through lists l1 and l2 until reach both ends and crarry is 0
         while l1 != None or l2 != None or carry != 0:
-    # Set x,y to node l1,l2's value. If l1,l2 has reached the end, set to 0
+    # Set each node of l1,l2's value; If l1,l2 has reached the end, set to 0
             l1Val = l1.val if l1 else 0
             l2Val = l2.val if l2 else 0
-            columnSum = l1Val + l2Val + carry  # Set sum = x + y + carry    
-            carry = columnSum // 10 # update carry = sum/10
-    # Create a new node with the digit value of (sum mod 10) 
-            newNode = ListNode(columnSum % 10) 
+            columnSum = l1Val + l2Val + carry  
+            
+            carry = columnSum // 10  # update carry，向下取整，有几个10进几位
+            newNode = ListNode(columnSum % 10)  # Create a new node with the digit value of (sum mod 10) 
+            
             curr.next = newNode # set it to current node's next        
             curr = newNode 
+            
             l1 = l1.next if l1 else None 
             l2 = l2.next if l2 else None
         return dummyHead.next
