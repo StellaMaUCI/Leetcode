@@ -40,8 +40,8 @@ class Solution:
     
     
     # Iteritive Time:O(n+m) Space:O(1) 
-        dummyHead = ListNode(-1)
-        cur = dummyHead
+        dummyHead = ListNode(0)  # node in result list
+        cur = dummyHead  # pointer in result list
         
         while list1 and list2:
             if list1.val <= list2.val:
@@ -52,8 +52,7 @@ class Solution:
                 list2 = list2.next            
             cur = cur.next
 
-        # At least one of l1 and l2 can still have nodes at this point, 
-        # so connect the non-null list to the end of the merged list.
-        cur.next = list1 if list1 is not None else list2
+        # l1 or l2 may still have nodes left
+        cur.next = list1 if list1 else list2  # connect non-null nodes left
 
         return dummyHead.next
