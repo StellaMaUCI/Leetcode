@@ -16,6 +16,7 @@ Output: [0]
 Example 3:
 Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
 Output: [8,9,9,9,0,0,0,1]
+没把数存到list或者多位数，否则需要颠倒再颠倒。而是直接把node数值提出来变成l1val，l2val
 """
 
 # Definition for singly-linked list.
@@ -43,6 +44,6 @@ class Solution:
             curr.next = newNode # set it to current node's next        
             curr = newNode 
             
-            l1 = l1.next if l1 else None 
+            l1 = l1.next if l1 else None # update new node if not none, make a linklist
             l2 = l2.next if l2 else None
         return dummyHead.next
