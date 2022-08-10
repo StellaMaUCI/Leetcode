@@ -17,6 +17,20 @@ Input: nums = [7,7,7,7,7,7,7]
 Output: 1
 """
 
+
+# DP + binary search. f[i]: last Min num for LIS at length i. 
+# Time: O(nlgn) space: O(n)
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        f = []
+        for i in range(len(nums)):
+            if not f or nums[i] > f[-1]:
+                f.append(nums[i])
+            else:
+                pos = bisect.bisect_left(f, nums[i])
+                f[pos] = nums[i]
+        return len(f)
+        
+        
 # DP
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
