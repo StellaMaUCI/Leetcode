@@ -3,18 +3,27 @@ The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). T
 Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
 The test cases are generated so that the answer will be less than or equal to 2 * 109."""
 
+# Math combination
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         """一共需要移动 m+n−2 次，其中有 m−1 次向下移动，n−1 次向右移动。
         路径的总数等于从 m+n-2 次中选择 m-1 次向下移动的方案数，即组合数C((m+n-2)，(m-1))
         时间复杂度为O(n)，空间复杂度O(1). factorial=sum of the multiplication down to 1"""
         return round(math.factorial(m+n-2)/math.factorial(m-1)/math.factorial(n-1))
-        
+
+# dp        
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-    # dp
         d = [[1] * n for _ in range(m)]
         for col in range(1, m):
             for row in range(1, n):
                 d[col][row] = d[col - 1][row] + d[col][row - 1]
         return d[m - 1][n - 1]
+
+
+# regression Time Limit Exceeded!
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if m == 1 or n == 1:
+            return 1      
+        return self.uniquePaths(m - 1, n) + self.uniquePaths(m, n - 1)
