@@ -21,7 +21,7 @@ class Solution:
         return d[m - 1][n - 1]
 
 
-# regression Time Limit Exceeded!
+# recursion Time Limit Exceeded!
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         if m == 1 or n == 1:
