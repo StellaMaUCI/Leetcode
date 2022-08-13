@@ -7,6 +7,20 @@ Explanation: [4,-1,2,1] has the largest sum = 6.
 
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
+        max_sum = cur = -sys.maxsize -1      
+        for num in nums:
+            if cur < 0:
+                cur = num
+            else:
+                cur = cur + num
+            if cur > max_sum:
+                max_sum = cur
+        return max_sum
+            
+            
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
         cur_sub = max_sub = nums[0]
         for num in nums[1:]:  # [1:]means start 2nd because 1st used 跟string用法一样
             cur_sub = max(num, cur_sub + num) #num是否要加取决于当前num大还是把前面的都加上大，也就是说如果前面的sub变成负数了就都不要了，只取当前数num
