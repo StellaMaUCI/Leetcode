@@ -1,0 +1,49 @@
+"""Given the root of a binary tree, return the inorder traversal of its nodes' values.
+
+
+Example 1:
+Input: root = [1,null,2,3]
+Output: [1,3,2]
+
+Example 2:
+Input: root = []
+Output: []
+
+Example 3:
+Input: root = [1]
+Output: [1]"""
+
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# In order: l- root - r
+
+class Solution: # Morris traversal 
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+        res = []
+        # 目标：要找root左支上右边最远那个node，连到root上，成为root.left
+        while root:
+            if root.left: 
+                cur = root.left # 要先把指针导到左支上
+                
+                while cur.right and cur.right != root: 
+                    cur = cur.right # 推动cur一直向右
+                    
+                if not cur.right: # 右边没有了，说明找到目标
+                    cur.right = root # 按照计划连到root上
+                    root = root.left # 刚才连到root上的那个node成为新的root
+                else: # 若cur右边还有，说明树上有loop，去掉连接，处理root，然后去root右支
+                    res.append(root.val) 
+                    root = root.right # root向右移
+            else:
+                res.append(root.val)
+                root = root.right
+        return res
+        
