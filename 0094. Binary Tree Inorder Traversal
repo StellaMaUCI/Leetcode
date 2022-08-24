@@ -22,29 +22,40 @@ Output: [1]"""
 #         self.left = left
 #         self.right = right
 # In order: l- root - r
-
+""" recursion 和 stack存树的数据是给定内存，太高的树存不了， stackoverflow
+        想不费space，就不存child null指针，于是用left child最右末端child reference上一个root，从而找到回去的路！
+        1.初始化当前节点为cur,一开始current来到整树root
+        2.当前节点不为空:
+            a.当前节点有左孩子,找到当前左子树的最右节点，记为pre
+                I.如果pre的r指针空，让其指向cur，cur向左移
+                II.如果pre的r指针指向cur，让其指向空，cur向右移动
+            b.当前节点没有左孩子,cur=cur->right
+        根据需要的遍历顺序在不同的时机打印节点,后续遍历时需要返回转列表进行遍历."""
+				
 class Solution: # Morris traversal T:O(n), S: O(1)
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         if not root:
             return []
         res = []
-        # 大目标：想不费space，就不存child null指针，于是用左支最右末端node reference来的时候的node，从而找到回去的路！
-        # reference来时的node造成的loop会帮助break程序里的while，说明左支遍历完了，可以跳到右边了。
+       
         while root:
-            if root.left: #小目标：要找root.left右边最远那个node，连到root上，成为root.left
-                cur = root.left # 要先把指针导到左支上    
-                while cur.right and cur.right != root: 
-                    cur = cur.right # 推动cur一直向右
+            if root.left: # 若有左支
+                pre = root.left # pre导到root前面左支上  
+                while pre.right and pre.right != root: 
+                    pre = pre.right # 寻找pre，要么在最右游离末端，或者是跟root形成loop的节点
                     
-                if not cur.right: # 右边没有了，说明找到目标
-                    cur.right = root # 按照计划连到root上
-                    root = root.left # 刚才连到root上的那个node成为新的root
-                else: # 若cur右边还有，说明树上有loop，去掉连接，处理root，然后去root右支
+                if not pre.right: # pre右child没了，说明没有loop
+                    pre.right = root # 按照计划连到当前的root上
+                    root = root.left # 让刚刚连到root上的那个pre成为新的root
+                else: # 若pre右边还有root，说明已经有loop,添加root，然后去右支
                     res.append(root.val) 
                     root = root.right # root向右移
                     
-            else: # 若cur右边还有，说明树上有loop，去掉连接，处理root，然后去root右支
-                res.append(root.val)
-                root = root.right
+            else: # 若没有左支
+                res.append(root.val) # 添加root.value
+                root = root.right # root右移
         return res
         
+
+    def inorder(root): # Recursive T:O(n), S: O(n)
+      return  self.inorder(root.left) + [root.val] + self.inorder(root.right) if root else []
