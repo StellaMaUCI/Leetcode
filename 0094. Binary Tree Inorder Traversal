@@ -23,16 +23,16 @@ Output: [1]"""
 #         self.right = right
 # In order: l- root - r
 
-class Solution: # Morris traversal 
+class Solution: # Morris traversal T:O(n), S: O(1)
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         if not root:
             return []
         res = []
-        # 目标：要找root左支上右边最远那个node，连到root上，成为root.left
+        # 大目标：想不费space，就不存child null指针，于是用左支最右末端node reference来的时候的node，从而找到回去的路！
+        # reference来时的node造成的loop会帮助break程序里的while，说明左支遍历完了，可以跳到右边了。
         while root:
-            if root.left: 
-                cur = root.left # 要先把指针导到左支上
-                
+            if root.left: #小目标：要找root.left右边最远那个node，连到root上，成为root.left
+                cur = root.left # 要先把指针导到左支上    
                 while cur.right and cur.right != root: 
                     cur = cur.right # 推动cur一直向右
                     
@@ -42,7 +42,8 @@ class Solution: # Morris traversal
                 else: # 若cur右边还有，说明树上有loop，去掉连接，处理root，然后去root右支
                     res.append(root.val) 
                     root = root.right # root向右移
-            else:
+                    
+            else: # 若cur右边还有，说明树上有loop，去掉连接，处理root，然后去root右支
                 res.append(root.val)
                 root = root.right
         return res
