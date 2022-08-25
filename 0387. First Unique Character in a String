@@ -13,9 +13,11 @@ Example 3:
 Input: s = "aabb"
 Output: -1"""
 
+
+from collections import Counter
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        dic = collections.Counter(s)
+        dic = Counter(s)
         for i, ch in enumerate(s):
             if dic[ch] == 1:
                 return i     
