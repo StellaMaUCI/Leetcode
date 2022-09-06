@@ -21,18 +21,18 @@ class Node:
         self.val = val
         self.children = children
 """
-from queue import Queue
-class Solution: # O(n) O(n)
+# from queue import Queue
+class Solution:
     def levelOrder(self, root: 'Node') -> List[List[int]]:
         if root is None:
             return []
         res = []
-        queue = deque([root])
+        queue = deque([root]) # Put the root node onto the queue
         while queue:
             level = []
             for _ in range(len(queue)):
-                node = queue.popleft()
-                level.append(node.val)
-                queue.extend(node.children)
-            res.append(level)
+                node = queue.popleft() # take a node off the queue
+                level.append(node.val) # add the node value(int) to the list
+                queue.extend(node.children) # add each of the node's children(NODES object) onto the queue
+            res.append(level) 
         return res
