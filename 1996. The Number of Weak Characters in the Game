@@ -1,0 +1,104 @@
+You are playing a game that contains multiple characters, and each of the characters has two main properties: attack and defense. 
+You are given a 2D integer array properties where properties[i] = [attacki, defensei] represents the properties of the ith character in the game.
+A character is said to be weak if any other character has both attack and defense levels strictly greater than this character's attack and 
+defense levels. More formally, a character i is said to be weak if there exists another character j where attackj > attacki 
+and defensej > defensei.
+
+Return the number of weak characters.
+
+
+Example 1:
+Input: properties = [[5,5],[6,3],[3,6]]
+Output: 0
+Explanation: No character has strictly greater attack and defense than the other.
+
+Example 2:
+Input: properties = [[2,2],[3,3]]
+Output: 1
+Explanation: The first character is weak because the second character has a strictly greater attack and defense.
+
+Example 3:
+Input: properties = [[1,5],[10,4],[4,3]]
+Output: 1
+Explanation: The third character is weak because the second character has a strictly greater attack and defense.
+ 
+
+Constraints:
+
+2 <= properties.length <= 105
+properties[i].length == 2
+1 <= attacki, defensei <= 105
+
+Algorithm
+
+1，Iterate over properties, and store the maximum defense value for attack values in the array maxDefense.
+2，Iterate over all the possible values of attack from the maximum possible attack value (100000) to 0. Keep the maximum value seen so far, 
+maxDefense[i] will represent the maximum value in the suffix [i, maxAttack].
+3，Iterate over the properties for every pair (attack, defense), increment the counter weakCharacters if the value at maxDefense[attack + 1] 
+is greater than defense.
+4，Return weakCharacters.
+"""
+
+class Solution: 
+    # Greedy T: O(PairNumber + max Attack value possible)  S: O(max Attack value possible)
+    def numberOfWeakCharacters(self, properties: List[List[int]]) -> int:
+        maxA = 0
+        for p in properties: # iterate each array in properites
+            attack = p[0] # get each attack as current one
+            maxA = max(maxA, attack) # keep maxA as max compared to current attack
+        maxD = [0 *(maxA + 2)]    
+        for p in properties:
+            attack = p[0]
+            defense = p[1]
+        maxD[attack] = max(maxD[attack],defense)    # sth. wrong here
+        for i in range(maxA-1, 0,-1):
+            maxd[i] = max(maxD[i], maxD[i+1])
+            weak=0
+        for p in properties:
+            attack = p[0]
+            defense = p[1]    
+        if defense < maxD[attack+1]:
+            weak += 1
+        return weak
+        
+
+
+class Solution: 
+    # Greedy T: O(PairNumber + max Attack value possible)  S: O(max Attack value possible)
+    def numberOfWeakCharacters(self, properties: List[List[int]]) -> int:
+        l = defaultdict(list)
+        
+        # Divide into groups
+        for attack, defense in properties:
+            l[attack].append(defense)
+        
+        attacks = list(l.keys())
+        attacks.sort()       
+        count = maxD = 0
+        
+        for attack in attacks[::-1]:           
+            tempMaxD = maxD
+            for defense in l[attack]:
+                if defense < maxD:
+                    count += 1
+                else:
+                    tempMaxD = max(tempMaxD, defense)
+            maxD = tempMaxD
+                
+        return count
+        
+        
+   class Solution(object): # sorting nlogn, logn
+    def numberOfWeakCharacters(self, properties):
+        properties.sort(key=lambda x: (-x[0], x[1]))
+        count = maxD = 0
+        for _, defense in properties:
+            if defense < maxD:
+                count += 1
+            else:
+                maxD = defense
+        return count
+
+
+
+
