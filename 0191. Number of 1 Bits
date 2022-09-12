@@ -17,14 +17,14 @@ The input must be a binary string of length 32. 就是不断右移32次，判断
 
 class Solution:
     def hammingWeight(self, n: int) -> int: 
-        return sum((n & (1<<i))!=0 for i in range(32))
+        return sum((n & (1<<i))!=0 for i in range(32)) # n & (1<<i))!=0 说明n与其左移i位在同一个位置都为1，因为1&1 = 1, 1&0 = 0&1 = 0&0 = 0 
         
 class Solution:
     def hammingWeight(self, n: int) -> int:
         cnt = 0
         while n :
             cnt+=1
-            n = n & (n-1)
+            n = n & (n-1) # n和n-1的低位不一样，直到有个转折点，就是借位的那个点，从这个点开始的高位，n和n-1都一样，其实就是将原来最右边的1变为0
         return cnt
         
 class Solution:
