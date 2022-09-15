@@ -18,7 +18,7 @@ Constraints:
 class Solution:
     def largestPerimeter(self, nums: List[int]) -> int:
         nums.sort(reverse = True)
-        for i in range(3,len(nums)+1):
+        for i in range(3,len(nums)+1): # 这里必须从第3循环到末尾，若直接看前3个是否组成三角形，很有可能组不成，还得看下一组
             if(nums[i-3] < nums[i-2] + nums[i-1]):
                 return sum(nums[i-3:i])
         return 0
