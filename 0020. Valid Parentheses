@@ -32,7 +32,8 @@ class Solution:
                 return False 
         return not stack   # check if the stack still contains unmatched open bracket
   
-  
+ 
+ # This is wrong, can't garantee open and closing bracket are the same type 
  class Solution:
     def isValid(self, s: str) -> bool:
         counter = 0;
