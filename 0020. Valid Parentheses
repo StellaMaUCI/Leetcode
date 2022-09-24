@@ -27,13 +27,13 @@ class Solution:
         for b in s: 
             if b in d: # b must be opening bracket, operator 'in' check up keys only
                 stack.append(b) # stack stores last emerging opening bracket
-            # else if b is close bracket and the stack is empty(meaning no matching open bracket), or the open bracket in d doesn't match
+            # else if b is close bracket and the stack is empty(meaning no open bracket), or the open bracket poped from stack in dict doesn't match
             elif (not stack) or d[stack.pop()] != b:  
                 return False 
         return not stack   # check if the stack still contains unmatched open bracket
   
  
- # This is wrong, can't garantee open and closing bracket are the same type 
+ # This is wrong, it garantee open and close numbers are same, but can't garantee they match
  class Solution:
     def isValid(self, s: str) -> bool:
         counter = 0;
