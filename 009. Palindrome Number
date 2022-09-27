@@ -1,0 +1,37 @@
+'''Given an integer x, return true if x is palindrome integer.
+An integer is a palindrome when it reads the same backward as forward.
+For example, 121 is a palindrome while 123 is not.
+
+Example 1:
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+
+Example 2:
+Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+/* x == res / 10 is for odd number of digits. 
+Suppose number is 45654, now it will come out of loop when x < res i.e. x = 45 and res = 456, so to truncate the 6 of res, 
+we use x = res / 10. But this is not the case of even digits. 
+Suppose number is 456654, it will come out of loop when x == res i.e. x = 456 and res = 456, so no need to truncate & ,
+we can use x == res directly for it. */
+
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x<0 || (x!=0 && x%10==0)) return false; // with "-" or "*0" must be False
+        int rev = 0;  
+        while (x > rev){
+            rev = rev*10 + x%10; // update rev with x's last digit adding in
+            x /= 10;  // x go to next digit
+    }
+    return (x==rev || x==rev/10); 
+}
+    }
+
+
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        s = str(x)
+        return s[:] == s[-1::-1]
