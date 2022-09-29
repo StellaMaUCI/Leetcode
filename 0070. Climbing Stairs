@@ -21,9 +21,21 @@ Constraints:
 1 <= n <= 45'''
 
 
- class Solution:
+ class Solution: # O(2^n) O(1)
      def climbStairs(self, n: int) -> int:
          if n <= 3:
              return n
          else:
              return self.climbStairs(n - 1) + self.climbStairs(n - 2)
+
+
+class Solution:  # O(n) O(1)
+    def climbStairs(self, n: int) -> int:
+        if n <= 2:
+            return n
+        
+        two_below = 1  # 2 steps below 3 - ways to take 1 step: 1
+        one_below = 2  # 1 step below 3 - ways to take 2 steps: 2
+        for i in range(3, n + 1):
+            two_below, one_below = one_below, one_below + two_below
+        return one_below
