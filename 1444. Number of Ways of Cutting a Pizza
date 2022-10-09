@@ -1,0 +1,121 @@
+‘’‘Given a rectangular pizza represented as a rows x cols matrix containing the following characters: 'A' (an apple) 
+and '.' (empty cell) and given the integer k. You have to cut the pizza into k pieces using k-1 cuts. 
+For each cut you choose the direction: vertical or horizontal, then you choose a cut position at the cell boundary 
+and cut the pizza into two pieces. If you cut the pizza vertically, give the left part of the pizza to a person. 
+If you cut the pizza horizontally, give the upper part of the pizza to a person. 
+Give the last piece of pizza to the last person.
+Return the number of ways of cutting the pizza such that each piece contains at least one apple. 
+Since the answer can be a huge number, return this modulo 10^9 + 7.
+
+Example 1:
+Input: pizza = ["A..","AAA","..."], k = 3
+Output: 3 
+Explanation: The figure above shows the three ways to cut the pizza. Note that pieces must contain at least one apple.
+
+Example 2:
+Input: pizza = ["A..","AA.","..."], k = 3
+Output: 1
+
+Example 3:
+Input: pizza = ["A..","A..","..."], k = 1
+Output: 1
+ 
+Constraints:
+1 <= rows, cols <= 50
+rows == pizza.length
+cols == pizza[i].length
+1 <= k <= 10
+pizza consists of characters 'A' and '.' only.’‘’
+
+
+class Solution:
+    def ways(self, pizza: List[str], k: int) -> int:
+        rows = len(pizza)
+        cols = len(pizza[0])
+        dp = []
+        dp = [{(rows, cols) : (0,0)} for _ in range(k)]
+        module = 10**9+7
+
+        posmatrix = [[None]*cols for _ in range(rows)]
+
+        def findpos(r, c):
+            if r >= rows or c >= cols:
+                return (rows,cols)
+            else:
+                return posmatrix[r][c]
+
+        for r in range(rows-1,-1,-1):
+            for c in range(cols-1,-1,-1):
+                if pizza[r][c] == 'A':
+                    posmatrix[r][c] = (r,c)
+                else:
+                    posmatrix[r][c] = (min(findpos(r+1,c)[0], findpos(r, c+1)[0]),
+                    min(findpos(r+1,c)[1], findpos(r, c+1)[1]))
+                if posmatrix[r][c] != (rows,cols):
+                    dp[0][posmatrix[r][c]] = (1,0)
+        
+        def dfs(row, col, remain):
+            if (row, col) in dp[remain]:
+                return dp[remain][(row,col)]
+            nr, nc = findpos(row+1, col)
+            rowcount = 0
+            rowcount += dfs(nr,nc, remain)[0] + (nr - row)*sum(dfs(nr,nc, remain-1))
+            rowcount = rowcount%module
+            nr, nc = findpos(row, col+1)
+            colcount = 0
+            colcount += dfs(nr, nc, remain)[1] + (nc - col)*sum(dfs(nr, nc, remain-1))
+            colcount = colcount%module
+            dp[remain][(row,col)] = (rowcount,colcount)
+            print(row,col,remain,(rowcount,colcount))
+            return (rowcount,colcount)
+
+        print(dp)
+        print(posmatrix)
+        start = findpos(0,0)
+        return sum(dfs(start[0],start[1], k-1))
+
+
+
+class Solution:
+    def ways(self, pizza, k: int) -> int:
+        mem = {}
+        """
+        dfs(row, col, k) means:
+        How many ways we can cut the pizza into `k` pieces when we have the first `row` rows and the first `col` columns removed.
+        
+        """
+        def dfs(row, col, k):
+            if (row, col, k) in mem:
+                return mem[(row, col, k)]
+
+            remains = pizza[row:]   # `remains` the remaining pizza when we have the first `row` rows and the first `col` columns removed
+            for i in range(len(remains)):
+                remains[i] = remains[i][col:]
+
+            if k == 1:  # When `k=1`, no need to cut the pizza any more. Check whether there is an apple in this piece
+                return 1 if 'A' in ''.join(remains) else 0
+
+            ans = 0
+            occur_in_row = False    # Whether the apple appears in the next `i` rows starting from row `row+1`
+            for i in range(row+1, len(pizza)+1): # We still have `len(pizza)-row` rows in `remains` which can be cut
+                if not occur_in_row and 'A' in remains[i-row-1]:   # We check whether there is an apple in the current row
+                    occur_in_row = True # When the apple appears in row `[i]`, it will also appear in the rows `[i:i+2]`, `[i:i+3]`..
+                if occur_in_row:
+                    ans += dfs(i, col, k-1) # Cut the rows `[row+1:i]` for one piece of pizza. Go on the dfs.
+            occur_in_col = False    # Operations on columns. Similar to the operations w.r.t. rows above.
+            for j in range(col+1, len(pizza[0])+1):
+                if not occur_in_col:
+                    for p in range(len(remains)):
+                        if remains[p][j-col-1] == 'A':
+                            occur_in_col = True
+                            break
+                if occur_in_col:
+                    ans += dfs(row, j, k-1)
+            mem[(row, col, k)] = ans    # store the current status into the memory
+            return ans
+        
+        return dfs(0, 0, k) % (10 ** 9 + 7)
+        
+        
+        
+  
