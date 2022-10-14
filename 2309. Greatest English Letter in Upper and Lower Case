@@ -43,6 +43,20 @@ class Solution {
   }
 }
         
+class Solution:
+	"""
+	Time:   O(2*26)
+	Memory: O(2*26)
+	"""
+  def greatestLetter(self, s: str) -> str:
+    s = set(s)
+    greatest = ''
+
+    for letter in s:
+     if letter.isupper() and letter.lower() in s:
+      greatest = max(letter, greatest)
+    return greatest
+
 
 
 class Solution:
