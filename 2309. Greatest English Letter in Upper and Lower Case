@@ -30,15 +30,29 @@ s consists of lowercase and uppercase English letters.
 '''
 
 
+class Solution {                                
+    public String greatestLetter(String s) {
+        Set<Character> set = new HashSet<>();
+        for(char ch : s.toCharArray())          // ：遍历array里面的元素
+            set.add(ch);
+        
+        for(char ch = 'Z'; ch >= 'A'; ch--)
+            if(set.contains(ch) && set.contains((char)('a'+(ch-'A'))))
+               return ""+ch;
+        return "";
+  }
+}
+        
+
+
 class Solution:
     def greatestLetter(self, s: str) -> str:
         s = set(s)
         print(s)
-        ascZ, ascz = ord('Z'), ord('z')
-        print(ascZ, ascz)
-        for i in range(26):
-            if chr(ascZ - i) in s and chr(ascz - i) in s: # 大写小写依次减去1-26换成对应字母，就是26字母大小写都过一遍
-                return chr(ascZ - i)                      # 从z开始过，因为要返回最大的，第一个碰到合适的就是答案
+        for letter in range(ord('Z'), ord('A') -1, -1):    # 从z开始往前过，右边开口，所以A要-1
+            if chr(letter) in s and chr(letter+32) in s:   # 对应的小写字母比大写字母多32
+                return chr(letter)                         # 要返回最大的，第一个碰到合适的就是答案
         return ''
-        
-        
+
+
+
