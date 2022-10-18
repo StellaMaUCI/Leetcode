@@ -35,15 +35,15 @@ class Solution {
 class Solution:  # O(n) O(n) One pass with dict
     def findMaxLength(self, nums: List[int]) -> int:
         dic = {}
+        dic[0] = -1
         maxLen, count = 0, 0
         for i in range(len(nums)):
-            count +=  1 if nums[i]==1 else -1        # 0-i区间内有相等数量的1和0
-            if count == 0:
-                maxLen = max(maxLen, i+1)
+            count +=  1 if nums[i]==1 else -1       # 遇到1count加1，遇到0count-1，count区间[-i,i)
+
             if count in dic:
-                maxLen = max(maxLen, i - dic[count]) # 字典存的count数
+                maxLen = max(maxLen, i - dic[count]) # 当前i-字典存的i就可能是最长len
             else:
-                dic[count] = i
+                dic[count] = i                       # 若字典里还没有这个count，记下来对应的i
         return maxLen
 
     
