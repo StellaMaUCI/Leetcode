@@ -21,21 +21,40 @@ Constraints:
 1 <= n <= 45'''
 
 
- class Solution: # O(2^n) O(1)
-     def climbStairs(self, n: int) -> int:
-         if n <= 3:
-             return n
-         else:
-             return self.climbStairs(n - 1) + self.climbStairs(n - 2)
-
-
-class Solution:  # O(n) O(1)
-    def climbStairs(self, n: int) -> int:
-        if n <= 2:
-            return n
+# class Solution:  # 答案只决定于前两个，用变量存俩数就够 O(n) O(1)
+#     def climbStairs(self, n: int) -> int:
+#         if n <= 2:
+#             return n
         
-        two_below = 1  # 2 steps below 3 - ways to take 1 step: 1
-        one_below = 2  # 1 step below 3 - ways to take 2 steps: 2
-        for i in range(3, n + 1):
-            two_below, one_below = one_below, one_below + two_below
-        return one_below
+#         two_below = 1  # 2 steps below 3 - ways to take 1 step: 1
+#         one_below = 2  # 1 step below 3 - ways to take 2 steps: 2
+#         for i in range(3, n + 1):
+#             two_below, one_below = one_below, one_below + two_below
+#         return one_below
+    
+class Solution: # dp存所有的数，底到头 O(n)   O(n)
+    def climbStairs(self, n: int) -> int:
+        if n <= 3:
+            return n
+        dp = [0]*n  
+        dp[0] = 1
+        dp[1] = 2
+        for i in range(2, n):  # 只遍历到n-1个
+            dp[i] = dp[i-1] + dp[i-2]
+        return dp[-1]  # 返回最后一个数即可，实际就是n-1
+    
+    
+ public class Solution {
+    public int climbStairs(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        int[] dp = new int[n];
+        dp[0] = 1;
+        dp[1] = 2;
+        for (int i = 2; i < n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n-1];
+    }
+}
