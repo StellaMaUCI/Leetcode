@@ -1,0 +1,28 @@
+'''Input: ABC65D19HY09 output: 34671011
+str1的数字下标在str2显示出来'''
+
+# class Solution:
+#     def indexToString(self, str1):       
+#         store = []
+#         for i, char in enumerate(str1):
+#             if char.isdigit()== True:
+#                 store.append(i)
+#         return ''.join(str(j) for j in store)
+class Solution:
+    def indexToString(self, str1):       
+        res = ''
+        for i, char in enumerate(str1):
+            if char>='0' and char<='9':
+                res = res + str(i)
+        return res
+    
+        
+def main():
+    str1 = input().strip()
+    print("str1: ", str1)
+    s = Solution()
+    result = s.indexToString(str1)
+    print (result)
+
+if __name__ == "__main__":
+    main()
