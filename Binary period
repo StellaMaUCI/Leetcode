@@ -1,0 +1,41 @@
+'''Definition of a binary period : The period of this string is the smallest positive integer P such that:
+P ≤ Q / 2 and S[K] = S[K+P] for 0 ≤ K < Q − P. For example, 7 is the period of “abracadabracadabra”. 
+A positive integer M is the binary period of a positive integer N if M is the period of the binary representation of N.
+1651 has the binary representation of "110011100111". Hence, its binary period is 5. 
+102 does not have a binary period, because its binary representation is “1100110” and it does not have a period.
+A positive integer M is the binary period of a positive integer N if M is the period of the binary representation of N.'''
+
+class Solution:   
+    def binary_period(self, n):
+        # 实现bin()
+        d = [0] * 30                 # 开30位数组，30怎么定的？
+        l = 0                       
+        while n > 0: 
+            d[l] = n % 2             # n%2余数进数组，存在l位置
+            n //= 2
+            l += 1
+        print("d= ", d)              # 成为反的二进制
+        # for p in range(1, 1 + l//2): # 从1到二进制的一半的下一位
+        for p in range(1, 1 + l):    # 即使d[i] != d[i + p]也不会停
+            print("p= ", p)
+            ok = True
+            for i in range(l - p):   # 从0到二进制后一半
+                print("i, l-p= ", i, l-p)
+                if d[i] != d[i + p]: # 若i位的数=i+p位的数
+                    print('d[i],d[i + p]=',d[i],d[i + p])
+                    ok = False       # 说明不循环了
+                    break
+            if ok:                   # 若到头都循环
+                return p             # 记下最大的p，p最大是二进制数的一半长
+        return -1
+
+def main():
+        n = int(input().strip())
+    # for n in range(100):
+        print("n= ", n)
+        s = Solution()
+        result = s.binary_period(n)
+        print ('result= ', result)
+    
+if __name__ == "__main__":
+    main()
