@@ -22,16 +22,29 @@ s consists of parentheses only '()[]{}'.
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        d = {'(': ')', '[':']', '{':"}"}
+        dic = {'(': ')', '[':']', '{':"}"}
         stack = []
-        for b in s: 
-            if b in d: # b must be opening bracket, operator 'in' check up keys only
-                stack.append(b) # stack stores last emerging opening bracket
-            # else if b is close bracket and the stack is empty(meaning no open bracket), or the open bracket poped from stack in dict doesn't match
-            elif (not stack) or d[stack.pop()] != b:  
+        for ch in s: 
+            if ch in dic: 
+                stack.append(ch) # stack stores last emerging opening bracket
+            elif (not stack) or dic[stack.pop()] != ch:  
                 return False 
         return not stack   # check if the stack still contains unmatched open bracket
-  
+
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        dic = {'}':'{', ']':'[', ')':'('}
+        for ch in s:
+            if ch in dic:
+                top = stack.pop() if stack else '!'
+                if dic[ch] != top:
+                    return False
+            else:
+                stack.append(ch)
+        return not stack
+            
  
  # This is wrong, it garantee open and close numbers are same, but can't garantee they match
  class Solution:
