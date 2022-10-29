@@ -1,0 +1,24 @@
+'''String input = "(25, 4) (1, -6)"; 求两点间距离'''
+# Python3 code to demonstrate working of 
+# Segregate Positive and Negative Integers Using regex
+import re
+
+string = input()
+# string = "(3,-5), (7,9)"
+print("The original string is : " + string)
+res = re.findall('[-+]?\d+', string) 
+# -+ matches a single character in the list -+ (case sensitive)
+# ? matches the previous token between zero and one times, as many times as possible, giving back as needed (greedy)
+# \d matches a digit (equivalent to [0-9])
+# + matches the previous token between one and unlimited times, as many times as possible, giving back as needed (greedy)
+
+
+x1,y1,x2,y2 = float(res[0]),float(res[1]),float(res[2]),float(res[3])
+
+print("The split string is : " + str(res))
+print("x1,y1 : ", x1, y1)
+print("x2,y2 : ", x2, y2)
+
+dist = sqrt(pow((x1-x2),2)+pow((y1-y2),2))
+# printing result 
+print("dist = ", dist)
