@@ -11,7 +11,8 @@ class Solution:
             nums1[i+m] = nums2[i]
         nums1.sort()
 
-
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
         a, b, i = m-1, n-1, m + n - 1             # all pointers from the end
 
         while b >= 0:                              
