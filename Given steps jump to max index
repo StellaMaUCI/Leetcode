@@ -1,0 +1,43 @@
+'''https://www.geeksforgeeks.org/maximum-index-a-pointer-can-reach-in-n-steps-by-avoiding-a-given-index-b/
+Given two integers N and B, the task is to print the maximum index a pointer, starting from 0th index can reach in an array of natural numbers(i.e., 0, 1, 2, 3, 4, 5…), in N steps without placing itself at index B at any point. Each step pointer can move from the Current Index to a Jumping Index or can remain at the Current Index. 
+Jumping Index = Current Index + Step Number
+从0开始跳，第几次跳就跳几格，不过也可不跳，求n跳能到最大index'''
+def maximumIndex(n, bad):
+    max_i = sum(range(n+1)) # 假设能到的最远index是每次都跳了
+    cur = max_i
+    step = n
+
+    while True:
+        while (cur > 0 and n > 0): 
+            cur -= n  # Decrement cur by step
+            if (cur == bad):
+                cur += n  # Restore to previous index            
+            n -= 1  # Decrement step by one
+        
+        if (cur <= 0): # If it reaches the 0th index
+            print(max_i) # means max_i can be reached
+            break
+        else:    # If fails to reach the 0th index
+            n = step
+            # Store max_index - 1 in current index
+            cur = max_i - 1
+            # Decrement max index
+            max_i -= 1
+            # If current index is equal to B
+            if (cur == bad):
+                cur = max_i - 1                
+                # Decrement current index
+                max_i -= 1
+ 
+# Driver Code
+if __name__ == '__main__':
+    # N = 3
+    # bad = 2 # 6
+    # N = 3
+    # bad = 1 # 5
+    N = 4
+    bad = 6 # 7
+    
+    maximumIndex(N, bad)
+ 
+# This code is contributed by mohit kumar 29
