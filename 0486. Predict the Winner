@@ -24,6 +24,7 @@ Constraints:
 1 <= nums.length <= 20
 0 <= nums[i] <= 107
 https://medium.com/algorithms-digest/predict-the-winner-16668e9c1cb8
+
 '''
 
 # Dp bottom-up, space O(N) by calculating the score difference with trick
