@@ -1,0 +1,35 @@
+'''Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+Example 1:
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+
+Example 2:
+Input: n = 1
+Output: ["()"]
+ 
+Constraints:
+1 <= n <= 8
+'''
+
+# class Solution:
+#     def generateParenthesis(self, n):
+#         def generate(p, left, right):
+#             if right >= left >= 0:
+#                 if not right:
+#                     yield p
+#                 for q in generate(p + '(', left-1, right): yield q
+#                 for q in generate(p + ')', left, right-1): yield q
+#         return list(generate('', n, n))
+        
+        
+        
+class Solution(object):
+    def generateParenthesis(self, N):
+        if N == 0: return ['']
+        ans = []
+        for c in range(N):
+            for left in self.generateParenthesis(c):
+                for right in self.generateParenthesis(N-1-c):
+                    ans.append('({}){}'.format(left, right))
+        return ans
