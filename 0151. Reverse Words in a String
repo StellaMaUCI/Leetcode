@@ -57,5 +57,6 @@ class Solution:
                 word.append(s[left])
             left += 1
         d.appendleft(''.join(word))
-        
+    
         return ' '.join(d)
+        
