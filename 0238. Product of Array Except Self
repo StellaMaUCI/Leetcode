@@ -19,7 +19,7 @@ Follow up: Can you solve the problem in O(1) extra space complexity?
 (The output array does not count as extra space for space complexity analysis.)
 
 
-# Time exceed:
+# Time exceed because everytime mutiply from the start. Use sliding window instead.
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         answer = []
@@ -40,6 +40,7 @@ class Solution:
 
             answer.append(left * right)
         return answer
+       
         
         
 class Solution:
