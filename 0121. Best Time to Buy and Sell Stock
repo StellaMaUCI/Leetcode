@@ -1,15 +1,29 @@
 “”“You are given an array prices where prices[i] is the price of a given stock on the ith day.
 You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
 Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.”“”
+
+# naive solution: [1,4,2] won't pass, 3 is expected while 1 is the answer
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxProfit = 0
+        l = 0
+        r = len(prices)-1
+        while l < r:
+            maxProfit = max(maxProfit, prices[r]-prices[l])
+            r -= 1
+            l += 1
+        return maxProfit
+
+
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         max_profit=0
-        l = 0 #Buy
-        r = 1 #Sell
+        l = 0 # Buy
+        r = 1 # Sell
         while r < len(prices):
             current_profit = prices[r] - prices[l] 
             if prices[l] < prices[r]: #左指针指向的数比右小
-                max_profit =max(current_profit,max_profit)
+                max_profit = max(current_profit,max_profit)
             else:
                 l = r #右指针指向的数比左小，左指针跳到右指针所在处
             r += 1
