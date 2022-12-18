@@ -28,6 +28,29 @@ Constraints:
 Follow up:
 It is very easy to come up with a solution with a runtime of O(n log n). Can you do it in linear time O(n) and possibly in a single pass?
 Can you do it without using any built-in function (i.e., like __builtin_popcount in C++)?
+
+每个i值都是 i&(i-1) 对应的值加1
+i    binary '1'  i&(i-1) '1'
+0    0000    0            0
+----------------------------
+1    0001    1    0000    0
+----------------------------
+2    0010    1    0000    0
+3    0011    2    0010    1
+----------------------------
+4    0100    1    0000    0
+5    0101    2    0100    1
+6    0110    2    0100    1
+7    0111    3    0110    2
+----------------------------
+8    1000    1    0000    0
+9    1001    2    1000    1
+10   1010    2    1000    1
+11   1011    3    1010    2
+12   1100    2    1000    1
+13   1101    3    1100    2
+14   1110    3    1100    2
+15   1111    4    1110    3
 """
 
 
