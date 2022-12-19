@@ -1,0 +1,19 @@
+'''Given two integers a and b, return the sum of the two integers without using the operators + and -.
+ 
+Constraints:
+-1000 <= a, b <= 1000'''
+
+ def getSum(self, a: int, b: int) -> int:
+         l = [a,b]
+         return sum(l)
+    
+    
+class Solution:
+    def getSum(self, a: int, b: int) -> int:
+        mask = 0xFFFFFFFF
+        
+        while b != 0:
+            a, b = (a ^ b) & mask, ((a & b) << 1) & mask
+        
+        max_int = 0x7FFFFFFF
+        return a if a < max_int else ~(a ^ mask)
