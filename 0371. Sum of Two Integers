@@ -1,5 +1,8 @@
 '''Given two integers a and b, return the sum of the two integers without using the operators + and -.
- 
+Example 2:
+Input: a = -2, b = 3
+Output: 1 
+
 Constraints:
 -1000 <= a, b <= 1000'''
 
@@ -17,3 +20,20 @@ class Solution:
         
         max_int = 0x7FFFFFFF
         return a if a < max_int else ~(a ^ mask)
+
+
+class Solution {
+public:
+    int getSum(int a, int b) {
+        long mask = 0xFFFFFFFF;
+        
+        while (b != 0) {
+            int answer = (a ^ b) & mask;
+            int carry = ((a & b) & mask) << 1;
+            a = answer;
+            b = carry;
+        }
+         
+        return a < INT_MAX ? a : ~(a ^ mask);
+    }
+};
