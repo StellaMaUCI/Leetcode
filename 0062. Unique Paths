@@ -11,7 +11,13 @@ class Solution:
         时间复杂度为O(n)，空间复杂度O(1). factorial=sum of the multiplication down to 1"""
         return round(math.factorial(m+n-2)/math.factorial(m-1)/math.factorial(n-1))
 
-# dp        
+
+# comb() >P3.8
+def uniquePaths(self, m: int, n: int) -> int:
+        return math.comb(m + n - 2, n - 1)
+        
+        
+# dp  T: O(N×M) S: O(N×M)
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         d = [[1] * n for _ in range(m)]
