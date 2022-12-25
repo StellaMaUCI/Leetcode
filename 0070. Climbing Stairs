@@ -17,7 +17,6 @@ Explanation: There are three ways to climb to the top.
 3. 2 steps + 1 step
 
 Constraints:
-
 1 <= n <= 45'''
 
 
@@ -36,7 +35,7 @@ class Solution: # dp存所有的数，底到头 O(n)   O(n)
     def climbStairs(self, n: int) -> int:
         if n <= 3:
             return n
-        dp = [0]*n  
+        dp = [0] * n  
         dp[0] = 1
         dp[1] = 2
         for i in range(2, n):  # 只遍历到n-1个
