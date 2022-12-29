@@ -25,8 +25,8 @@ All the strings of wordDict are unique."""
 
 
 
-""" 指针i表示子字符串从头到当前的长度，j指针切割子字符串 s′(0,j)为 s′(j+1,i)， dp[0]=True因为null算是在字典里。"""
-class Solution:
+""" 指针i表示子字符串从头到当前的长度，j指针切割子字符串 s′(0,j)为 s′(j+1,i)， dp[0]=True因为null算是在字典里。O(n^3)O(n)"""
+class Solution: 
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         n = len(s)
         # dp储存到i为止的结果（对错）
