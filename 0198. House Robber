@@ -28,7 +28,7 @@ Constraints:
 """
 
 
-class Solution:
+class Solution: # O(n)O(n)
     def rob(self, nums: List[int]) -> int:
         n = len(nums)
         dp = [0] * n  # dp[i] 表示 [0, i] 区间可以抢夺的最大值 
@@ -36,7 +36,18 @@ class Solution:
         for i in range(1, n):
             dp[i] = max(dp[i-2]+ nums[i], dp[i-1])
         return dp[-1]
+
+
+class Solution:  # O(n)O(1)
+    def rob(self, nums: List[int]) -> int: 
+        N = len(nums)        
+        rob, not_rob = 0, 0
         
+        for i in range(N):
+            # rob前一个不能抢，所以用之前的notRob 加上当前的数字赋给现在的rob
+            # notRob之前的房子可以抢也可以不抢，所以将原来的rob和notRob中较大值赋给现在的notRob
+            rob, not_rob = not_rob + nums[i], max(rob, not_rob)
+        return max(rob, not_rob)
         
 C++:
 class Solution {
