@@ -31,20 +31,19 @@ Output: 1
         return len(f)
         
         
-# DP
-class Solution:
+# dp  O(n2) 
     def lengthOfLIS(self, nums: List[int]) -> int:
-        dp = [1] * len(nums)
-        for i in range(1, len(nums)):
-            for j in range(i):
-                if nums[i] > nums[j]:
-                    dp[i] = max(dp[i], dp[j] + 1)
-
-        return max(dp)
+        dp = [1] * len(nums) # dp[i] 表示以 nums[i] 为结尾的最长递增子串的长度
+        for i in range(len(nums)): # 对于每一个 nums[i]
+            for j in range(i): # 从第一个数再搜索到i
+                if nums[i] > nums[j]:  # 如果发现nums[i]大于前面的某个数nums[j]，更新 dp[i] 
+                    dp[i] = max(dp[i], dp[j] + 1) # dp[j]是那个小于 nums[i] 的数在dp中的值
+                    # +1是因为有一个比nums[i]小的数，dp[i]就应该+1；若没有+1，dp就永远是[1,1,1..]
+        return max(dp)  # 最大值即为 LIS 的长度  
         
         
         
-# smart choose subarray
+# Intuition
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         sub = [nums[0]]
@@ -53,7 +52,7 @@ class Solution:
             if num > sub[-1]:
                 sub.append(num)
             else:
-        # Find 1st element sub[x] >= num
+        # Find 1st element that sub[x] >= num
                 i = 0
                 while num > sub[i]:
                     i += 1
