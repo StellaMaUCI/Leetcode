@@ -18,17 +18,20 @@ Output: 1
 """
 
 
-# DP + binary search. f[i]: last Min num for LIS at length i. 
+# DP + binary search.  
 # Time: O(nlgn) space: O(n)
     def lengthOfLIS(self, nums: List[int]) -> int:
-        f = []
-        for i in range(len(nums)):
-            if not f or nums[i] > f[-1]:
-                f.append(nums[i])
+        sub = []
+        for num in nums:
+            # bisect_left(ls, x, lo=0, hi=len(ls))前提是列表有序，返回大于等于x的第一个idx
+            i = bisect_left(sub, num)
+            # If num is greater than any element in dp
+            if i == len(sub):
+                sub.append(num)           
+            # Otherwise, replace the first element in dp greater than or equal to num
             else:
-                pos = bisect.bisect_left(f, nums[i])
-                f[pos] = nums[i]
-        return len(f)
+                sub[i] = num
+        return len(sub)
         
         
 # dp  O(n2) 
