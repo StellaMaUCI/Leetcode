@@ -18,13 +18,15 @@ Output: 0 """
 # Dynamic programming - Bottom up
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        dp = [float('inf')] * (amount + 1)
-        dp[0] = 0
-        
-        for coin in coins:
-            for x in range(coin, amount + 1):
-                dp[x] = min(dp[x], dp[x - coin] + 1)
+        # 一维动态数组，dp[j] 表示钱数为j时的最小硬币数. amount+1 由于最小的硬币是1，所以最多需要 amount 个硬币，amount+1 也就相当于当前的最大值了，注意这里不能用整型最大值来初始化，因为在后面的状态转移方程有加1的操作，有可能会溢出，除非你先减个1，这样还不如直接用 amount+1 舒服呢
+        dp = [float('inf')] * (amount + 1) 
+        dp[0] = 0  # 目标值若为0时，就不需要硬币了
+
+        for i in coins:
+            for j in range(i, amount + 1):
+                dp[j] = min(dp[j], dp[j - i] + 1) # i代表硬币数额，j-i为钱数j减去其中一个硬币的值
         return dp[amount] if dp[amount] != float('inf') else -1 
+
         
 
 # BFS-based O(S*n) - Queue and a Set for memoization.
