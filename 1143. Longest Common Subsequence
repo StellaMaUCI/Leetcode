@@ -12,7 +12,7 @@ Input: text1 = "abc", text2 = "abc"
 Output: 3
 """
 
-# Wrong! Relative order changed. Subsequence is neither subarray nor same letters!! 
+# Wrong! Relative order changed. Subsequence is neither subarray nor same letters!! 字符并不需要相连，但是字符顺序还是需要保持的。
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
         res = []
@@ -21,29 +21,51 @@ class Solution:
                 res.append(i)
         return len(res)
         
-# Right! 用动态规划 Dynamic Programing 来做（数多少个用动态规划，列出所有方法或者路径用递归），
-# 使用一个二维数组aa，其中 aa[i][j] 表示 text1 的前i个字符和 text2 的前j个字符的最长相同的子序列的字符个数，
-# 大小初始化为 (m+1)x(n+1)，这里的m和n分别是 text1 和 text2 的长度。
-# 接下来就要找状态转移方程了，如何来更新 aa[i][j]，若二者对应位置的字符相同，表示当前的 LCS 又增加了一位，所以可以用 aa[i-1][j-1] + 1 来更新 aa[i][j]。
-# 否则若对应位置的字符不相同，由于是子序列，还可以错位比较，可以分别从 text1 或者 text2 去掉一个当前字符，就是 aa[i-1][j] 和 aa[i][j-1]，
-# 取二者中的较大值来更新 aa[i][j] 即可，最终的结果保存在了 aa[m][n] 中
+""" 用动态规划 Dynamic Programing 来做（数多少个用动态规划，列出所有方法或者路径用递归），
+ 使用一个二维数组aa，其中 aa[i][j] 表示 text1 的前i个字符和 text2 的前j个字符的最长相同的子序列的字符个数，
+ 大小初始化为 (m+1)x(n+1)，这里的m和n分别是 text1 和 text2 的长度。
+ 若对应位置的字符相同，表示当前的 LCS 又增加了一位， aa[i-1][j-1] + 1 来更新 aa[i][j];
+ 否则若对应位置的字符不相同，由于是子序列，还可以错位比较，可以分别从 text1 或者 text2 去掉一个当前字符，就是 aa[i-1][j] 和 aa[i][j-1]，
+ 取二者中的较大值来更新 aa[i][j] 即可，最终的结果保存在了 aa[m][n] 中"""
+
 from functools import lru_cache
 
-class Solution:
+class Solution:  
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-        
         @lru_cache(maxsize=None) # 参数maxsize（最大可缓存结果数量）：默认值128，None可以缓存无限结果；typed默认False，为true时，不同类型参数将被分别缓存。
         def memo_solve(ptr1, ptr2):
             if ptr1 == len(text1) or ptr2 == len(text2):
-                return 0
-            
+                return 0          
             # Case 1
             if text1[ptr1] == text2[ptr2]:
-                return 1 + memo_solve(ptr1+1, ptr2+1)
-        
+                return 1 + memo_solve(ptr1+1, ptr2+1)    
             # Case 2
             else:     
                 return max(memo_solve(ptr1+1, ptr2), memo_solve(ptr1,ptr2+1))
-                       # ^    # ^ Case 2 - Option 1           ^ Case 2 - Option 2
+                       # ^ Case 2 - Option 1           ^ Case 2 - Option 2
 					   # | __You want the max() result from resulting branches in the tree 
         return memo_solve(0,0) # Start the recursion stack from str1[0] and str2[0]						
+
+
+
+
+# Time complexity : O(M⋅N) each is an O(1) operation to solve.
+# Space complexity : O(min⁡(M,N)) We've reduced the auxilary space required so that we only use two 1D arrays at a time; each the length of the shortest input word. Seeing as the 222 is a constant, we drop it, leaving us with the minimum length out of the two words.
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        # Make a grid of 0's with len(text2) + 1 columns and len(text1) + 1 rows.
+        dp_grid = [[0] * (len(text2) + 1) for _ in range(len(text1) + 1)]
+        
+        # Iterate up each column, starting from the last one.
+        for col in reversed(range(len(text2))):
+            for row in reversed(range(len(text1))):
+                # If the corresponding characters for this cell are the same...
+                if text2[col] == text1[row]:
+                    dp_grid[row][col] = 1 + dp_grid[row + 1][col + 1]
+                # Otherwise they must be different...
+                else:
+                    dp_grid[row][col] = max(dp_grid[row + 1][col], dp_grid[row][col + 1])
+        
+        # The original problem's answer is in dp_grid[0][0]. Return it.
+        return dp_grid[0][0]
+            
