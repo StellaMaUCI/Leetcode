@@ -58,6 +58,7 @@ class Solution(object):
     def __init__(self):
         # Dictionary to save the visited node and it's respective clone
         # as key and value respectively. This helps to avoid cycles.
+        # a node could have any number of neighbors so store in a list
         self.visited = {}
 
     def cloneGraph(self, node):
