@@ -148,17 +148,16 @@ class Node(object):
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
         ## APPROACH : HASHMAP - DFS ##
-		## TIME COMPLEXITY : O(N) ##
-		## SPACE COMPLEXITY : O(N) ##
-
+		## TIME COMPLEXITY : O(V+E) ##
+		## SPACE COMPLEXITY : O(V+E) ##
+        
         def dfs(node):
-            
             # { old node : new clone node }
             if(node in visited):
                 return visited[node]
-            
+            # save a new node to hashmap with the same value as the given node
             visited[node] = Node(node.val)
-            
+            # Clone all the neighbors recursively.
             for nei in node.neighbors:
                 visited[node].neighbors.append(dfs(nei))
                 
