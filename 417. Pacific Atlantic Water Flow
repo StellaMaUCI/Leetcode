@@ -1,0 +1,50 @@
+'''There is an m x n rectangular island that borders both the Pacific Ocean and Atlantic Ocean. 
+The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the 
+island's right and bottom edges.The island is partitioned into a grid of square cells. 
+You are given an m x n integer matrix heights where heights[r][c] represents the height above 
+sea level of the cell at coordinate (r, c).
+The island receives a lot of rain, and the rain water can flow to neighboring cells directly 
+north, south, east, and west if the neighboring cell's height is less than or equal to the 
+current cell's height. Water can flow from any cell adjacent to an ocean into the ocean.
+Return a 2D list of grid coordinates result where result[i] = [ri, ci] denotes that rain 
+water can flow from cell (ri, ci) to both the Pacific and Atlantic oceans.
+Constraints:
+m == heights.length
+n == heights[r].length
+1 <= m, n <= 200
+0 <= heights[r][c] <= 105'''
+
+
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        if not heights or not heights[0]:
+            return []
+
+        m,n = len(heights),len(heights[0])
+        pacific_visited = set()
+        atlantic_visited = set()
+
+        def dfs(row, col, visited):
+            # put visited cell in visited
+            visited.add((row, col))
+            for (x,y) in [(1,0), (0,1), (-1,0), (0,-1)]:
+                new_row, new_col = row + x, col + y
+                # if new cell outside bounds or visited, continue
+                if new_row < 0 or new_row >= m or new_col < 0 or new_col >=n or (new_row, new_col) in visited:
+                    continue
+                # if new cell height < old cell height, continue
+                if heights[new_row][new_col] < heights[row][col]:
+                    continue
+                dfs(new_row, new_col, visited)
+
+
+        # Loop through each cell adjacent to the oceans and start a DFS
+        for i in range(m):
+            dfs(i, 0, pacific_visited)
+            dfs(i, n - 1, atlantic_visited)
+        for i in range(n):
+            dfs(0, i, pacific_visited)
+            dfs(m - 1, i, atlantic_visited)
+
+        # Find all cells that can reach both oceans, and convert to list
+        return list(pacific_visited.intersection(atlantic_visited))
