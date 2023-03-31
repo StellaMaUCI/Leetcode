@@ -26,10 +26,10 @@ Output: [1]"""
 #         self.val = val
 #         self.next = next
 class Solution:
-    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
-        dummy = slow = fast = ListNode()
-        slow.next = head
-        
+   def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        dummy = slow = fast = ListNode(0)
+        dummy.next = head
+    
         while fast.next:
             fast = fast.next
             n -= 1
@@ -38,6 +38,7 @@ class Solution:
         
         slow.next = slow.next.next
         return dummy.next
+       
      
 
 
@@ -55,18 +56,18 @@ class Solution { // O(n) O(1)
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
-        ListNode first = dummy;
-        ListNode second = dummy;
-        // Advances first pointer so that the gap between first and second is n nodes apart
-        for (int i = 1; i <= n + 1; i++) {
-            first = first.next;
+        ListNode slow = dummy;
+        ListNode fast = dummy;
+        // Advances fast n steps, so the gap between fast and slow is n nodes
+        for (int i = 0; i <= n; i++) {
+            fast = fast.next;
         }
-        // Move first to the end, maintaining the gap
-        while (first != null) {
-            first = first.next;
-            second = second.next;
+        // Move fast and slow together until fast to the end, maintaining the gap
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
         }
-        second.next = second.next.next;
+        slow.next = slow.next.next;
         return dummy.next;
     }
 }
