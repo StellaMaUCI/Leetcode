@@ -18,6 +18,47 @@ The number of nodes in the list is in the range [1, 5 * 104].
 
 
 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        // save linked list in array
+        ListNode[] arr = new ListNode[50000];
+        ListNode cur = head;
+        int length = 0;
+        while (cur != null) {
+            arr[length++] = cur;
+            cur = cur.next;
+        }
+        // Reorder with two-pointers
+        int left = 0, right = length -1;
+        ListNode last = head;
+        while (left < right) {
+            arr[left].next = arr[right];
+            left +=1;
+            if (left == right) {
+                last = arr[right];
+                break;
+        }
+        arr[right].next = arr[left];
+            right -=1;
+            last = arr[left];
+    }
+    if (last != null)
+            last.next = null;
+    }
+}
+Console
+
+
 
 # Definition for singly-linked list.
 # class ListNode:
