@@ -1,27 +1,26 @@
-class Solution:
+class Solution: # O(m*n) O(1)
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
         res = []
-        row = len(matrix)
-        col = len(matrix[0])
+        rows,cols = len(matrix),len(matrix[0])
         up = left = 0
-        right = col - 1
-        down = row - 1
+        right = cols - 1
+        down = rows - 1
 
-        while len(res) < row * col:
-            # ->
+        while len(res) < rows * cols:
+            # right
             for col in range(left, right + 1):
                 res.append(matrix[up][col])
-            # !
+            # down
             for row in range(up + 1, down + 1):
                 res.append(matrix[row][right])
             # Make sure we are now on a different row.
             if up != down:
-                # Traverse from right to left.
+                # left
                 for col in range(right - 1, left - 1, -1):
                     res.append(matrix[down][col])
             # Make sure we are now on a different column.
             if left != right:
-                # Traverse upwards.
+                # up
                 for row in range(down - 1, up, -1):
                     res.append(matrix[row][left])
 
@@ -29,5 +28,4 @@ class Solution:
             right -= 1
             up += 1
             down -= 1
-
         return res
