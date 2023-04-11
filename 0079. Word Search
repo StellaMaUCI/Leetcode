@@ -15,8 +15,10 @@ class Solution: # O(mn * 4^k),O(k)
                 return False
             if k == len(word) - 1:
                 return True
-            tmp, board[i][j] = board[i][j], '!'
+            tmp, board[i][j] = board[i][j], '!' # before dummy, record the cell by tmp
+            # Check if the rest of the word can be found by exploring neighboring cells
             res = dfs(i+1, j, k+1) or dfs(i-1, j, k+1) or dfs(i, j+1, k+1) or dfs(i, j-1, k+1)
+            # Restore the original value of the current cell
             board[i][j] = tmp
             return res
     
