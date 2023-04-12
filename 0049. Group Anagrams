@@ -31,3 +31,25 @@ class Solution: # sort each string in O(KlogK) k is the max len of a string in s
                 dic[sorted_w] = [] # empty[] in value for additional anagrams
             dic[sorted_w].append(w)
         return list(dic.values())        
+
+
+
+
+import java.util.*;
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for (String w : strs){
+            char[] chars = w.toCharArray();
+            Arrays.sort(chars);
+            String sorted = new String(chars);
+            if (!map.containsKey(sorted)) {
+                map.put(sorted, new ArrayList<String>());
+            }
+            map.get(sorted).add(w);
+        }
+        return new ArrayList<>(map.values());
+
+        
+    }
+}
