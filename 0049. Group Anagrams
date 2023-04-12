@@ -1,0 +1,33 @@
+'''Given an array of strings strs, group the anagrams together. 
+You can return the answer in any order.
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, 
+typically using all the original letters exactly once.
+
+Example 1:
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+Example 2:
+Input: strs = [""]
+Output: [[""]]
+
+Example 3:
+Input: strs = ["a"]
+Output: [["a"]]
+ 
+Constraints:
+1 <= strs.length <= 104
+0 <= strs[i].length <= 100
+strs[i] consists of lowercase English letters.'''
+
+class Solution: # sort each string in O(KlogK) k is the max len of a string in strs
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        dic = {} # keys are joined sorted(w), val are words in strs
+
+        for w in strs:
+            sorted_w = ''.join(sorted(w))
+            # print(sorted(w))
+            if sorted_w not in dic:
+                dic[sorted_w] = [] # empty[] in value for additional anagrams
+            dic[sorted_w].append(w)
+        return list(dic.values())        
