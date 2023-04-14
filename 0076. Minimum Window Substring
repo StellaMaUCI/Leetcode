@@ -33,47 +33,32 @@ class Solution: # O(s+t) O(s+t)
         if not t or not s:
             return ""
 
-        # Dictionary which keeps a count of all the unique characters in t.
-        dict_t = Counter(t)
-
-        # Number of unique characters in t, which need to be present in the desired window.
-        required = len(dict_t)
-
-        # left and right pointer
         l, r = 0, 0
+        t_map = Counter(t) # characters in t
+        t_char_num = len(t_map) # Num of diff char
+        res_char_num = 0 # char num from t present in the curr win in its desired frequency
+        win_char_map = {} # cur win char count dict
+        ans = float("inf"), None, None # ans tuple of the form (window length, left, right)
 
-        # formed is used to keep track of how many unique characters in t are present in the current window in its desired frequency.
-        # e.g. if t is "AABC" then the window must have two A's, one B and one C. Thus formed would be = 3 when all these conditions are met.
-        formed = 0
-
-        # Dictionary which keeps a count of all the unique characters in the current window.
-        window_counts = {}
-
-        # ans tuple of the form (window length, left, right)
-        ans = float("inf"), None, None
-
+        # keep expanding the window by moving the right pointer.
         while r < len(s):
-
-            # Add one character from the right to the window
-            character = s[r]
-            window_counts[character] = window_counts.get(character, 0) + 1
-
-            # If the frequency of the current character added equals to the desired count in t then increment the formed count by 1.
-            if character in dict_t and window_counts[character] == dict_t[character]:
-                formed += 1
+            s_char = s[r]
+            win_char_map[s_char] = win_char_map.get(s_char, 0) + 1 # 0 is return when null
+            if s_char in t_map and win_char_map[s_char] == t_map[s_char]:
+                res_char_num += 1 # s_char in t_map key and eaqual value 
 
             # Try and contract the window till the point where it ceases to be 'desirable'.
-            while l <= r and formed == required:
-                character = s[l]
+            while l <= r and res_char_num == t_char_num:
+                s_char = s[l]
 
                 # Save the smallest window until now.
                 if r - l + 1 < ans[0]:
                     ans = (r - l + 1, l, r)
 
                 # The character at the position pointed by the `left` pointer is no longer a part of the window.
-                window_counts[character] -= 1
-                if character in dict_t and window_counts[character] < dict_t[character]:
-                    formed -= 1
+                win_char_map[s_char] -= 1
+                if s_char in t_map and win_char_map[s_char] < t_map[s_char]:
+                    res_char_num -= 1
 
                 # Move the left pointer ahead, this would help to look for a new window.
                 l += 1    
