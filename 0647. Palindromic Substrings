@@ -30,3 +30,16 @@ class Solution:
             count = checkPalin(count,cur,cur) # check palindromes odd
             count = checkPalin(count,cur,cur+1) # check palindromes even
         return count
+
+
+class Solution:
+    def countSubstrings(self, S: str) -> int:
+        ans, n, cur = 0, len(S), 0
+        while (cur < n):
+            l, r = cur - 1, cur
+            while r < n - 1 and S[r] == S[r+1]: r += 1                
+            ans += (r - l) * (r - l + 1) // 2
+            cur, r = r + 1, r + 1
+            while ~l and r < n and S[r] == S[l]:
+                l, r, ans = l - 1, r + 1, ans + 1
+        return ans
