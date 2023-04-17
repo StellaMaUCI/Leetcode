@@ -28,6 +28,27 @@ class Solution: # O(n)， O(min(m,n)) optimized sliding window
             max_len = max(max_len, right - left + 1) # choose maxlenth 
         return max_len
         
+        
+ class Solution: 
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        char_set = set()
+        l = 0
+        max_len = 0
+        for r in range(len(s)):
+            if s[r] not in char_set:
+                char_set.add(s[r])
+                # +1 to include the current character
+                max_len = max(max_len, r-l+1) 
+            else:
+                while s[l] != s[r]:
+                    char_set.remove(s[l])
+                    l += 1
+                # move the left pointer past the repeating character
+                l += 1 
+        return max_len
+        
+        
+        
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
         int n = s.length(), ans = 0;
