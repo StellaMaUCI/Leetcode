@@ -10,6 +10,9 @@ Both the left and right subtrees must also be binary search trees.'''
 #         self.val = val
 #         self.left = left
 #         self.right = right
+# root开始是数组，一旦用了val，left, right就指到具体node了
+
+
 # class Solution: # O(n) O(n) Recursive DFS inorder
 #     def isValidBST(self, root: Optional[TreeNode]) -> bool:
 #         def inorder(root):
@@ -28,13 +31,15 @@ Both the left and right subtrees must also be binary search trees.'''
 class Solution: # O(n) O(n) Iterative DFS inorder    
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         stack, prev = [], -math.inf
-        while stack or root:
-            while root:
-                stack.append(root)
+        while stack or root: # trasverse all tree
+        # traverses left subtree of the current node 
+            while root: 
+                stack.append(root) # 第一次进栈是数组，但pop出来就是根node
                 root = root.left
             root = stack.pop()
             if root.val <= prev:
                 return False
-            prev = root.val
+            # traverses the right subtree
+            prev = root.val 
             root = root.right
         return True
