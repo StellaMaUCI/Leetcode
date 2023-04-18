@@ -26,7 +26,25 @@ Both the left and right subtrees must also be binary search trees.'''
 #             return inorder(root.right)
 #         self.prev = -math.inf
 #         return inorder(root)
-
+class Solution: # O(n) O(n) Recursive DFS inorder
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def inorder(root):
+            if not root: # stop condition
+                return True 
+            if not inorder(root.left): # miss left leave
+                return False
+            if root.val <= self.prev: 
+                return False
+            self.prev = root.val
+            return inorder(root.right)
+        self.prev = -math.inf
+        return inorder(root)
+# SELF allows multiple instances of the class to have their own separate value for prev. 
+# This is useful when multiple binary trees are being processed at the same time, 
+# and each binary tree needs its own separate prev value to keep track of the previous node 
+# during the inorder traversal. If prev was a local variable within the inorder function, 
+# it would be re-initialized to its default value every time the function is called recursively.
+# By making it a member variable of the class, its value persists between calls to the inorder function
 
 class Solution: # O(n) O(n) Iterative DFS inorder    
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
