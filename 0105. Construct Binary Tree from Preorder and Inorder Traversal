@@ -24,6 +24,10 @@ inorder is guaranteed to be the inorder traversal of the tree.'''
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+# 通过前序遍历和中序遍历，我们可以确定一棵唯一的二叉树。由于前序遍历的第一个元素是根节点的值，因此我们可以使用它来确定根节点，然后根据中序遍历中根节点的位置将左子树和右子树分离。
+# 在 preorder 列表中，根节点的值出现在第一个位置，然后是左子树的所有节点值，最后是右子树的所有节点值。
+# 若根节点在 inorder 列表中的索引 i，那么所有索引小于 i 的元素都属于根节点的左子树，而所有索引大于 i 的元素都属于根节点的右子树。array_to_tree指的是inorder.
 class Solution: #O(n) O(n)
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         def array_to_tree(left, right):
