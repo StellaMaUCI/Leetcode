@@ -14,7 +14,10 @@ The number of nodes in the tree is in the range [1, 3 * 104].
 #         self.left = left
 #         self.right = right
 
-''' Consider a path sum contributed by a subtree only if it is positive. we need to process the children before we process a node. This indicates that we need to perform a post-order traversal of the tree because, in post-order, children are processed before the parent. Recursive function takes the root of the subtree as the input. The function returns the path sum gain contributed by the subtree. To calculate the path sum gain, the function calls itself recursively on the subtree's left and right child.'''
+''' Consider a path sum contributed by a subtree only if it is positive. we need to process the children before we process a node. 
+This indicates that we need to perform a post-order traversal of the tree because, in post-order, children are processed before the parent. 
+Recursive function takes the root of the subtree as the input. The function returns the path sum gain contributed by the subtree. 
+To calculate the path sum gain, the function calls itself recursively on the subtree's left and right child.'''
 
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
