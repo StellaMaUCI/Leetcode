@@ -28,9 +28,9 @@ class Solution:
             if not node:
                 return 0
             
-            sum_left = max(dfs(node.left), 0)
-            sum_right = max(dfs(node.right), 0)
-            sum = max(sum, sum_left+sum_right+node.val)
+            sum_left = max(dfs(node.left), 0) # keep positive only 
+            sum_right = max(dfs(node.right), 0) # keep positive only 
+            sum = max(sum, sum_left+sum_right+node.val) # cur path sum
             # return max sum for a path starting at the root of subtree
             return max(sum_left+node.val, sum_right+node.val)
 
