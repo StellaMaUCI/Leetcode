@@ -21,7 +21,7 @@ The number of nodes in the tree is n.
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution:
+class Solution: # O(logn) or O(n) 
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         stack = []
         
