@@ -35,3 +35,26 @@ class Solution: # O(logn) or O(n)
                 return root.val
             root = root.right
  
+ 
+ 
+import heapq
+class Solution:
+    def kthSmallest(self, root: TreeNode, k: int) -> int:
+        heap = [] # k smallest that are greater than the curr we are visiting
+        
+        def dfs(node):
+            if not node:
+                return
+            # in-order traversal
+            dfs(node.left) 
+            
+            if len(heap) < k:
+        # negative value the k smallest elements that are greater than v, which are the candidates for the kth smallest element
+                heapq.heappush(heap, -node.val)
+        # for each node, check if its value is less than the largest element in the heap
+            elif node.val < -heap[0]:
+                heapq.heappushpop(heap, -node.val)
+            dfs(node.right)
+            
+        dfs(root)
+        return -heap[0]
