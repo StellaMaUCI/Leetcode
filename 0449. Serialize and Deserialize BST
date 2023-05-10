@@ -23,7 +23,7 @@ The input tree is guaranteed to be a binary search tree.'''
 #         self.left = None
 #         self.right = None
 
-class Codec:
+class Codec: # O(n) O(n)
     def serialize(self, root: Optional[TreeNode]) -> str:
         """Encodes a tree to a single string.
         """
