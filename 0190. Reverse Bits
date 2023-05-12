@@ -40,9 +40,7 @@ class Solution:
 # For each bit, we reverse it to the correct position (i.e. (n & 1) << power). Then we accumulate this reversed bit to the final result.
 # When there is no more bits of one left (i.e. n == 0), we terminate the iteration.
 
-class Solution:
-    # @param n, an integer
-    # @return an integer
+class Solution: # O(1) O(1)
     def reverseBits(self, n):
         res, power = 0, 31
         while n:
