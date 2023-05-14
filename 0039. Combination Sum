@@ -69,6 +69,7 @@ class Solution:
         elif target == 0:
             res.append(path)
             return
+        # The implied condition here is...if not target<0 or ==0:
         for i in range(index, len(nums)):
             if nums[index] > target:
                 return
