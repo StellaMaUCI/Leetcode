@@ -37,3 +37,17 @@ public:
         return a < INT_MAX ? a : ~(a ^ mask);
     }
 };
+
+
+class Solution {
+    public int getSum(int a, int b) {
+        while (b != 0) {
+            int answer = a ^ b; // bitwiseXOR: same=0;diff=1
+            int carry = (a & b) << 1; // bitwiseAND: 1&1=1;others=0
+            a = answer;
+            b = carry;
+        }
+        
+        return a;
+    }
+}
