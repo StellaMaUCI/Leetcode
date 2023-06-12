@@ -28,35 +28,21 @@ There is at least one word in s.
 Follow-up: If the string data type is mutable in your language, can you solve it in-place with O(1) extra space?
 '''
 
-class Solution:
-    def reverseWords(self, s: str) -> str:
-        l = s.split()       
-        n = len(l)
-        return ' '.join(l[-1:-(n+1):-1])
+ class Solution:
+     def reverseWords(self, s: str) -> str:
+         l = s.split()       
+         return ' '.join(reversed(l))
 
+class Solution {
+    public String reverseWords(String s) {
+        // re: \s+ split one or more whitespace char, "\\"escape themselves
+        String[] words = s.split("\\s+"); 
+        StringBuilder wb = new StringBuilder();
+        for (int i = words.length - 1; i >= 0; i --){
+            wb.append(words[i]).append(" ");
+        }
+        return wb.toString().trim();
+    }
+}
 
-from collections import deque
-class Solution:
-    def reverseWords(self, s: str) -> str:
-        left, right = 0, len(s) - 1
-        # remove leading spaces
-        while left <= right and s[left] == ' ':
-            left += 1
-        
-        # remove trailing spaces
-        while left <= right and s[right] == ' ':
-            right -= 1
-            
-        d, word = deque(), []
-        # push word by word in front of deque
-        while left <= right:
-            if s[left] == ' ' and word:
-                d.appendleft(''.join(word))
-                word = []
-            elif s[left] != ' ':
-                word.append(s[left])
-            left += 1
-        d.appendleft(''.join(word))
-    
-        return ' '.join(d)
         
