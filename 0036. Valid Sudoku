@@ -41,18 +41,45 @@ board[i][j] is a digit 1-9 or '.'.
 '''
 
 
-class Solution:
+class Solution: 
     def isValidSudoku(self, board: List[List[str]]) -> bool:
         seen = set()
 
-        for i, row in enumerate(board):
-            for j, val in enumerate(row):
+        for i, row in enumerate(board): # iterate row
+            for j, val in enumerate(row): # iterate col
                 if val != ".":
+                    # tuple (val,i) row出现过,以此类推，三种记录方式代表行列宫三个check
                     if (val, i) in seen or (j, val) in seen or (i//3, j//3, val) in seen:
                         return False
                     else:
                         seen.add((val, i))
                         seen.add((j, val))
                         seen.add((i//3, j//3, val))
-        # print(seen)
+        print(seen)
         return True
+    
+    
+#         row = [set() for _ in range(9)]
+#         col = [set() for _ in range(9)]
+#         box = [set() for _ in range(9)]
+#         for r in range(9):
+#             for c in range(9):
+#                 val = board[r][c]
+#                 # Check if the position is filled with number
+#                 if val == ".":
+#                     continue
+#                 # Check the row
+#                 if val in row[r]:
+#                     return False
+#                 row[r].add(val)
+#                 # Check the column
+#                 if val in col[c]:
+#                     return False
+#                 col[c].add(val)
+#                 # Check the box
+#                 i = (r//3) * 3 + c//3
+#                 if val in box[i]:
+#                     return False
+#                 box[i].add(val)
+#         return True
+                    
