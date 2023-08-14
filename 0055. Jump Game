@@ -37,14 +37,17 @@ class Solution {
     }
 }
     
-    
+   
 # backward    
-def canJump(self, nums):
-    goal = len(nums) - 1
-    for i in range(len(nums))[::-1]:
-        if i + nums[i] >= goal:
-            goal = i
-    return not goal
+    def canJump(self, nums):
+        goal = len(nums) - 1 
+        # 不是只check前一个i，若前一个i跳不到cur goal，i会继续往前走；
+        # 说不定隔两个i就会有个nums[i]是能跳到goal的。那时goal也可以=i
+        for i in range(goal + 1)[::-1]:
+            if i + nums[i] >= goal:
+                goal = i
+        # 若goal能一直跑到0(false)，就说明从0开始一定有办法跳到goal，所以要return true（not goal)
+        return not goal
 
 
 class Solution {
