@@ -34,15 +34,13 @@ class Solution:
 
 class Solution:
     def isValid(self, s: str) -> bool:
+        dict = {")":"(", "]":"[", "}":"{"}
         stack = []
-        dic = {'}':'{', ']':'[', ')':'('}
-        for ch in s:
-            if ch in dic:
-                top = stack.pop() if stack else '!'
-                if dic[ch] != top:
-                    return False
+        for b in s:
+            if stack and b in dict and dict[b] == stack[-1]:
+                stack.pop()
             else:
-                stack.append(ch)
+                stack.append(b)
         return not stack
 
 
