@@ -17,5 +17,5 @@ function pascalTriangle(k) {
         }
     }
     
-    const k = 5; // Change this to the desired number of rows
+    const k = 4; 
     pascalTriangle(k);
