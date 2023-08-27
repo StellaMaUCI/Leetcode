@@ -1,0 +1,21 @@
+function pascalTriangle(k) {
+        for (let n = 0; n < k; n++) {
+            let row = '';
+            for (let r = 0; r <= n; r++) {
+                const entry = factorial(n) / (factorial(r) * factorial(n - r));
+                row += entry + ' ';
+            }
+            console.log(row);
+        }
+    }
+    
+    function factorial(num) {
+        if (num === 0 || num === 1) {
+            return 1;
+        } else {
+            return num * factorial(num - 1);
+        }
+    }
+    
+    const k = 5; // Change this to the desired number of rows
+    pascalTriangle(k);
