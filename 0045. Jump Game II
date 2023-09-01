@@ -22,19 +22,16 @@ Constraints:
 It's guaranteed that you can reach nums[n - 1].’‘’
 
 class Solution:
-  def jump(self, nums: List[int]) -> int:
-    count = 0
-    end = 0
-    far = 0
-
-    # Implicit BFS
-    for i in range(len(nums) - 1):
-      far = max(far, i + nums[i])
-      if far >= len(nums) - 1:
-        count += 1
-        break
-      if i == end:  # Visited all the items on the current level
-        count += 1  # Increment the level
-        end = far  # Make the queue size for the next level
-
-    return count
+    def jump(self, nums: List[int]) -> int:
+        # the initial range (after 0th jump) is [0,0]
+        l = r = 0
+        count = 0
+        n = len(nums)
+        while r < n - 1:
+            count += 1
+            furthest = max([i + nums[i] for i in range(l,r+1)])
+            l,r = r+1, furthest
+        return count
+        
+        # Time complexity: O(N)
+        # Space complexity: O(1)
