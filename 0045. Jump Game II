@@ -29,6 +29,7 @@ class Solution:
         n = len(nums)
         while r < n - 1:
             count += 1
+            # 从当前l到r+1区间内能跳到的最远点
             furthest = max([i + nums[i] for i in range(l,r+1)])
             l,r = r+1, furthest
         return count
