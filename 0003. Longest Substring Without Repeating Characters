@@ -46,7 +46,40 @@ class Solution: # O(n)， O(min(m,n)) optimized sliding window
                 # move the left pointer past the repeating character
                 l += 1 
         return max_len
-        
+
+
+class Solution: # 错误答案！
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if len(s) == 1 : return 1
+
+        dic = []
+        n = len(s)
+        leng = 0
+        for i in range(n):
+            if s[i] in dic: 
+                if s[i] in dic:
+                    # 错误，应该去掉dic里第一个s[i]之前的所有,循环之后追加s[i]
+                    # 这样就能保证当前窗口里没有重复
+                    dic = [s[i]] 
+                else:
+                    dic = []
+                leng = max(len(dic), leng)
+            else:
+                dic.append(s[i])
+                leng = max(len(dic), leng)
+        return leng
+
+class Solution: # Sliding window
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        dic = []
+        n = len(s)
+        leng = 0
+        for i in range(n):
+            if s[i] in dic:
+                leng = max(len(dic), leng)
+                dic = dic[dic.index(s[i]) + 1:]
+            dic.append(s[i])
+        return max(len(dic), leng)
         
         
 public class Solution {
