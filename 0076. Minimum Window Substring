@@ -27,41 +27,37 @@ s and t consist of uppercase and lowercase English letters.
  
 Follow up: Could you find an algorithm that runs in O(m + n) time?'''
 
-'''We keep expanding the window by moving the right pointer. When the window has all the desired characters, 
-we contract (if possible) and save the smallest window till now.'''
+'''这道题也可以不用 HashMap，直接用个 int 的数组来代替，因为 ASCII 只有256个字符，所以用个大小为 256 的 int 数组即可代替 HashMap，
+但由于一般输入字母串的字符只有 128 个，所以也可以只用 128，其余部分的思路完全相同，虽然只改了一个数据结构，但是运行速度提高了一倍，
+说明数组还是比 HashMap 快啊。在热心网友 chAngelts 的提醒下，还可以进一步的优化，没有必要每次都计算子串，只要有了起始位置和长度，
+就能唯一的确定一个子串。这里使用一个全局变量 minLeft 来记录最终结果子串的起始位置，初始化为 -1，最终配合上 minLen，就可以得到最终结果了。
+注意在返回的时候要检测一下若 minLeft 仍为初始值 -1，需返回空串'''
 
-class Solution: # O(s+t) O(s+t)
-    def minWindow(self, s: str, t: str) -> str:
-        if not t or not s:
-            return ""
+class Solution:
+    def minWindow(self, s, t):
+        t_ch = [0] * 128
+        left = 0
+        cnt = 0
+        minLeft = -1
+        minLen = float("inf")
+        
+        for ch in t:
+            t_ch[ord(ch)] += 1
+        
+        for i, sch in enumerate(s):
+            t_ch[ord(sch)] -= 1
+            if t_ch[ord(sch)] >= 0:
+                cnt += 1
+            
+            while cnt == len(t):
+                if minLen > i - left + 1:
+                    minLen = i - left + 1
+                    minLeft = left
+                
+                t_ch[ord(s[left])] += 1
+                if t_ch[ord(s[left])] > 0:
+                    cnt -= 1
+                left += 1
+        
+        return "" if minLeft == -1 else s[minLeft:minLeft + minLen]
 
-        l, r = 0, 0
-        t_map = Counter(t) 
-        t_char_num = len(t_map) # Num of diff char
-        count = 0 # char num from t in the curr win in its desired frequency
-        win_char_map = {} # cur win char count dict
-        ans = float("inf"), None, None # ans tuple of the form (window length, l, r)
-
-        # keep expanding win by moving r
-        while r < len(s):
-            s_char = s[r]
-            win_char_map[s_char] = win_char_map.get(s_char, 0) + 1 # 0 is return when null
-            if s_char in t_map and win_char_map[s_char] == t_map[s_char]:
-                count += 1 # s_char in t_map key and eaqual value 
-
-            # Try and contract win till the point where it ceases to be 'desirable'.
-            while l <= r and count == t_char_num:
-                s_char = s[l]
-
-                # Save the smallest window until now.
-                if r - l + 1 < ans[0]:
-                    ans = (r - l + 1, l, r)
-
-                # The char at the pos pointed by l is no longer part of the win
-                win_char_map[s_char] -= 1
-                if s_char in t_map and win_char_map[s_char] < t_map[s_char]:
-                    count -= 1
-                l += 1    
-            # Keep expanding the window once we are done contracting.
-            r += 1    
-        return "" if ans[0] == float("inf") else s[ans[1] : ans[2] + 1]
