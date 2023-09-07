@@ -27,37 +27,35 @@ s and t consist of uppercase and lowercase English letters.
  
 Follow up: Could you find an algorithm that runs in O(m + n) time?'''
 
-'''这道题也可以不用 HashMap，直接用个 int 的数组来代替，因为 ASCII 只有256个字符，所以用个大小为 256 的 int 数组即可代替 HashMap，
-但由于一般输入字母串的字符只有 128 个，所以也可以只用 128，其余部分的思路完全相同，虽然只改了一个数据结构，但是运行速度提高了一倍，
-说明数组还是比 HashMap 快啊。在热心网友 chAngelts 的提醒下，还可以进一步的优化，没有必要每次都计算子串，只要有了起始位置和长度，
-就能唯一的确定一个子串。这里使用一个全局变量 minLeft 来记录最终结果子串的起始位置，初始化为 -1，最终配合上 minLen，就可以得到最终结果了。
-注意在返回的时候要检测一下若 minLeft 仍为初始值 -1，需返回空串'''
+'''这道题也可以不用 HashMap，直接用个 int 的数组来代替，因为基本ASCII只有128个字符；而且没有必要每次都计算子串，只要有了起始位置和长度，就能唯一的确定一个子串。全局变量 min_left 记录最终子串的l，初始化为-1，min_len记录r。注意在返回的时候要检测一下若 minLeft 仍为初始值 -1，需返回空串'''
 
 class Solution:
     def minWindow(self, s, t):
-        t_ch = [0] * 128
+        t_ch = [0] * 128 # ASIC号码当index,数值初始为0，大于0说明t出现的多，小于0说明s出现的多
+        t_leng = len(t)
         left = 0
         cnt = 0
-        minLeft = -1
-        minLen = float("inf")
+        min_left = -1 # 记录最终子串的左边界
+        min_leng = float("inf") # 记录最终子串的长度来确定其右边界
         
+        # array变dict套路,k:v = distinct char:frequency,
+        # "ordinal". An ordinal is a number that represents the position of something in a sequence. 
         for ch in t:
             t_ch[ord(ch)] += 1
         
-        for i, sch in enumerate(s):
-            t_ch[ord(sch)] -= 1
+        for r, sch in enumerate(s):
+            t_ch[ord(sch)] -= 1 # 
             if t_ch[ord(sch)] >= 0:
                 cnt += 1
             
-            while cnt == len(t):
-                if minLen > i - left + 1:
-                    minLen = i - left + 1
-                    minLeft = left
+            while cnt == t_leng:
+                if min_leng > r - left + 1:
+                    min_leng = r - left + 1
+                    min_left = left
                 
                 t_ch[ord(s[left])] += 1
                 if t_ch[ord(s[left])] > 0:
                     cnt -= 1
                 left += 1
         
-        return "" if minLeft == -1 else s[minLeft:minLeft + minLen]
-
+        return "" if min_left == -1 else s[min_left:min_left + min_leng]
