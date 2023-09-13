@@ -14,7 +14,7 @@ def max_exchange_rate(rates, selected_currency, target_currency):
         all_currencies.add(dst)
 
     # Initialize distances with -1, and set the selected currency's distance to 1
-    distances = {currency: -1 for currency in all_currencies}
+    distances = {currency: -1.0 for currency in all_currencies}
     distances[selected_currency] = 1
 
     # Relax the edges V-1 times where V is the number of vertices (currencies)
