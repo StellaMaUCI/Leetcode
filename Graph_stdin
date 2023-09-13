@@ -10,7 +10,7 @@ def max_exchange_rate(rates, selected_currency, target_currency):
         if src not in graph:
             graph[src] = []
         graph[src].append((dst, ex_rate))
-        all_currencies.add(src)
+        all_currencies.add(src) 
         all_currencies.add(dst)
 
     # Initialize distances with -1, and set the selected currency's distance to 1
@@ -25,21 +25,18 @@ def max_exchange_rate(rates, selected_currency, target_currency):
                 if distances[src] != -1:
                     new_distances[dst] = max(new_distances[dst], distances[src] * ex_rate)
         distances = new_distances
-
     return distances.get(target_currency, -1.0)
 
-
 # Read stdin and parse
-stand_in = []
-for line in sys.stdin:
-    stand_in.append(line.strip())
+stand_in = sys.stdin.readlines()
+print(stand_in)
+
     
 # Read rates from stand_in
 rates = []
 for rate in stand_in[0].split(";"):
     src, dst, rate = rate.strip().split(",")
     rates.append((src, dst.strip(), float(rate)))
-
 
 # Get the max exchange rate
 result = max_exchange_rate(rates, stand_in[1], stand_in[2])
