@@ -18,11 +18,19 @@ class Solution:
         matrix[1][2]->matrix[2][-2]
         matrix[i][j]->matrix[j][-2]
         """
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
         n = len(matrix[0])
-        for i in range(n//2+n%2):
+        # loop前一半行，若奇数，包含中间行
+        for i in range(n//2 + n % 2):
+            # loop前一半列。要是后一半也走一遍的话就会把移动好了的重新移动一遍，就错了
             for j in range(n//2):
-                tmp=matrix[n-1-j][i]
-                matrix[n-1-j][i] = matrix[n-1-i][n-1-j]
-                matrix[n-1-i][n-1-j] = matrix[j][n-1-i]
-                matrix[j][n-1-i] = matrix[i][j]
-                matrix[i][j] = tmp
+                # n-1-j代表： 从初始矩阵j列，旋转后的行数
+                tmp = matrix[n-1-j][i] # 左下角开始作为tmp
+                matrix[n-1-j][i] = matrix[n-1-i][n-1-j] # 右下角移动到左下角
+                matrix[n-1-i][n-1-j] = matrix[j][n-1-i] # 右上角移动到右下角
+                matrix[j][n-1-i] = matrix[i][j] # 左上角移动到右上角
+                matrix[i][j] = tmp # 左上角等于初始的那个tmp，即最初左下角
