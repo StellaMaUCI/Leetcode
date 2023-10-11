@@ -1,0 +1,29 @@
+'''Given an integer n, return the number of prime numbers that are strictly less than n.
+
+Example 1:
+Input: n = 10
+Output: 4
+Explanation: There are 4 prime numbers less than 10, they are 2, 3, 5, 7.
+Example 2:
+Input: n = 0
+Output: 0
+Example 3:
+Input: n = 1
+Output: 0
+ 
+Constraints:
+0 <= n <= 5 * 106
+"Sieve of Eratosthenes" algorithm, 时间复杂度大约是 O(nloglogn)，空间复杂度是 O(n)。
+首先，2是一个质数，所以你会标记4, 6, 8...为非质数。接下来，3是下一个质数，所以你会标记6, 9, 12...为非质数。
+然后是5，标记10, 15, 20...，依此类推。最后，未被标记的数字2, 3, 5, 7, 11, 13, 17, 19, 23, 29都是质数。
+'''
+
+class Solution:
+    def countPrimes(self, n: int) -> int:
+        if n < 2: return 0
+        s = [1] * n
+        s[0] = s[1] = 0
+        for i in range(2, int(n ** 0.5) + 1):
+            if s[i] == 1:
+                s[i * i:n:i] = [0] * len(s[i * i:n:i])
+        return sum(s)
