@@ -30,8 +30,7 @@ class Solution: # sort each string in O(KlogK) k is the max len of a string in s
             if sorted_w not in dic:
                 dic[sorted_w] = [] # empty[] in value for additional anagrams
             dic[sorted_w].append(w)
-        return list(dic.values())        
-
+        return list(dic.values())   
 
 
 
@@ -49,7 +48,5 @@ class Solution {
             map.get(sorted).add(w);
         }
         return new ArrayList<>(map.values());
-
-        
     }
 }
