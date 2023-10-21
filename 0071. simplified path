@@ -32,12 +32,17 @@ path is a valid absolute Unix path.'''
 
 class Solution:
     def simplifyPath(self, path: str) -> str:
-        s = []
+        stack = []
         paths = path.split("/")
-        for c in paths:
-            if c == '..':
-                if s:
-                    s.pop()
-            elif c.isalpha() or (c and c!='.'):
-                s.append(c)
-        return "/" + "/".join(s)
+        
+        for dir in paths:
+            print("dir", dir, "stack", stack)  
+            if dir == "..": 
+# if dir == ".." and stack:不行，因为后面条件不满足进不了if循环，那么就会进elif循环，
+# 然后..就被加入stack了，于是答案为/..而不是/，就错了
+              if stack:
+                stack.pop()
+            elif dir and dir != ".":
+                stack.append(dir)
+             
+        return "/" + "/".join(stack)
