@@ -44,8 +44,8 @@ class Solution: # O(n) O(n)
         return False
         
         
-        
- class Solution: # O(n) O(1) fast and slow will get overlap if loop 
+ # Floyd's Cycle Detection Algorithm：若有环，fast会在某点追上slow，返回True       
+ class Solution: # O(n) O(1)  
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         if head is None:
             return False
