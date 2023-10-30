@@ -39,12 +39,12 @@ class Solution:
 C#:
 public class Solution {
     public bool IsPalindrome(int x) {
-        int r = 0, c = x;
-        while (c > 0)
+        int rev = 0, cur = x;
+        while (cur > 0)
         {
-            r = r * 10 + c % 10;
-            c /= 10;
+            rev = rev * 10 + cur % 10;
+            cur /= 10;
         }
-        return r == x;
+        return rev == x;
     }
 }
