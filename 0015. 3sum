@@ -8,6 +8,7 @@ Notice that the solution set must not contain duplicate triplets."""
 如果三数之和大于0，则将右边指针左移一位，使得指向的数字减小一些；
 如果三个数和正好为0，则将三个数一起存入结果中。
 然后就是跳过重复数字的步骤了，两个指针都需要检测重复数字"""
+
 class Solution: # O(n^2) O(n)
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         res = []
