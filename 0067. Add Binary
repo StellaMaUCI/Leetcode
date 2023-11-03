@@ -30,3 +30,9 @@ class Solution:
             carry //= 2
 
         return ''.join(reversed(s))       
+
+
+
+class Solution: 
+    def addBinary(self, a: str, b: str) -> str:
+        return bin(int(a,2)+int(b,2))[2:] # 二进制开头0b
