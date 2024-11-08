@@ -1,0 +1,20 @@
+def matrixTraversal(matrix):
+    rows, cols = len(matrix), len(matrix[0])
+    row, col = rows-1, cols-1
+    traversal_path = []
+    direction = -1 # up
+    
+    # zigzag pattern; start from the bottom right
+    for _ in range(rows*cols):
+        traversal_path.append(matrix[row][col])
+        if (row == 0 and direction == -1) or (row == rows-1 and direction == 1):
+            direction*=-1
+            col -= 1
+        else:
+            row += direction
+    return traversal_path
+
+matrix = [[1,2,3,4],
+        [5,6,7,8],
+        [9,10,11,12]]
+print(matrixTraversal(matrix))
