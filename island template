@@ -1,0 +1,33 @@
+# island template
+def path_traverse(grid, start_row, start_col):
+    rows, columns = len(grid), len(grid[0])
+    if start_row < 0 or start_row >= rows or start_col < 0 or start_col >= columns:
+        return "Invalid input"
+
+    directions = [(1, 0), (-1, 0), (0, -1), (0, 1)]
+
+    # 从起始格的值开始
+    visited = [grid[start_row][start_col]]
+
+    # 无限循环直到无法继续活动时break
+    while True:
+        curr_max = -1
+
+        # 检查相邻四个方向的格子
+        for dir in directions:
+            new_row = start_row + dir[0]
+            new_col = start_col + dir[1]
+            # 若新格子出边界了就无视它
+            if new_row < 0 or new_row >= rows or new_col < 0 or new_col >= columns:
+                continue
+            # 若新格子的值比当前最大值还大就记录它
+            if grid[new_row][new_col] > curr_max:
+                next_row, next_col, curr_max = new_row, new_col, grid[new_row][new_col]
+ 
+        if curr_max <= grid[start_row][start_col]: 
+            break 
+        # 否则就去下一个格子并记录它的值
+        start_row, start_col = next_row, next_col
+        visited.append(curr_max)
+ 
+    return visited
