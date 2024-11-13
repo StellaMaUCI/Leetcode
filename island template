@@ -63,4 +63,4 @@ matrix = [
     [2, 3, 4],
     [3, 5, 6]
 ]
-print(trek_path(matrix, 1, 1))
+print(findpath(matrix, 1, 1))
