@@ -1,0 +1,26 @@
+
+def inbox(inbox_str):
+    email_list = inbox_str.split(";")
+    count_map = {}
+    
+    for email in email_list:
+        address, _, _ = email.split(",")
+        address = address.strip()
+        count_map[address] = count_map.get(address, 0) + 1
+        
+    result = list(count_map.items())
+    # Sort by count (descending) then address (ascending)
+    result.sort(key=lambda item: ( -item[1],item[0]))  
+    return result
+    # 错误的return
+    # return sorted([(address, count_map[address]) for address, count in count_map.items()])
+
+# Example usage and test cases:
+inbox_str1 = "test@example.com, Sub1, 01:00; test@example.com, Sub2, 02:00; other@email.com, Sub3, 03:00; another@test.com, Sub4, 04:00; other@email.com, Sub5, 05:00; test@example.com, Sub6, 06:00"
+print(organize_inbox(inbox_string2)) # Output: [('test@example.com', 3), ('other@email.com', 2), ('another@test.com', 1)]
+
+inbox_str2 = "a@a.com, s1, 00:00; b@b.com, s2, 00:00; a@a.com, s3, 00:00; c@c.com, s4, 00:00; b@b.com, s5, 00:00; a@a.com, s6, 00:00"
+print(organize_inbox(inbox_string3)) # Output: [('a@a.com', 3), ('b@b.com', 2), ('c@c.com', 1)]
+
+inbox_str3 = "z@z.com, s1, 00:00; a@a.com, s2, 00:00; x@x.com, s3, 00:00; b@b.com, s4, 00:00"
+print(organize_inbox(inbox_string4)) # Output: [('a@a.com', 1), ('b@b.com', 1), ('x@x.com', 1), ('z@z.com', 1)]
