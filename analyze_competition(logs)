@@ -1,0 +1,56 @@
+def analyze_competition(logs):
+    """
+    Analyzes competition logs and returns student scores, solves, and penalties.
+
+    Args:
+        logs: A string containing the competition logs.
+
+    Returns:
+        A list of tuples, where each tuple contains (student_id, score, solves, penalties),
+        sorted by score in descending order.
+    """
+
+    student_data = {}  # Dictionary to store student data
+
+    if not logs: #handle empty logs
+        return []
+
+    log_entries = logs.split(", ")
+
+    for entry in log_entries:
+        parts = entry.split()
+        student_id = int(parts[0])
+        action = parts[1]
+
+        if student_id not in student_data:
+            student_data[student_id] = {"score": 0, "solves": 0, "penalties": 0}
+
+        if action == "solve":
+            score = int(parts[3])
+            student_data[student_id]["score"] += score
+            student_data[student_id]["solves"] += 1
+        elif action == "fail":
+            student_data[student_id]["penalties"] += 1
+    
+    # Filter out students with no solves
+    valid_students = {k: v for k, v in student_data.items() if v["solves"] > 0}
+
+    result = []
+    for student_id, data in valid_students.items():
+        result.append((student_id, data["score"], data["solves"], data["penalties"]))
+
+    result.sort(key=lambda item: item[1], reverse=True)  # Sort by score (descending)
+    return result
+
+# Test cases
+logs1 = "1 solve 09:00 50, 2 solve 10:00 60, 1 fail 11:00, 3 solve 13:00 40, 2 fail 14:00, 3 solve 15:00 70"
+print(analyze_competition(logs1))  # Output: [(3, 110, 2, 0), (2, 60, 1, 1), (1, 50, 1, 1)]
+
+logs2 = ""
+print(analyze_competition(logs2)) # Output: []
+
+logs3 = "1 fail 09:00"
+print(analyze_competition(logs3)) # Output: []
+
+logs4 = "1 solve 09:00 50, 1 solve 10:00 50, 1 fail 11:00, 2 solve 12:00 100"
+print(analyze_competition(logs4)) # Output: [(2, 100, 1, 0), (1, 100, 2, 1)]
