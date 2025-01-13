@@ -1,0 +1,36 @@
+def solution(matrix):
+    n = len(matrix)
+    m = len(matrix[0])
+    result = []
+
+    direction = 1  # 1 for up-right, -1 for down-left
+    row, col = 0, 0
+
+    while row < n and col < m:
+        # If the current cell contains a negative integer, add its 1-based index
+        if matrix[row][col] < 0:
+            result.append((row + 1, col + 1))
+
+        if direction == 1:  # Moving up-right
+            if col + 1 < m and row - 1 >= 0:
+                row -= 1
+                col += 1
+            elif col + 1 < m:  # Hit the top boundary, move right
+                col += 1
+                direction = -1
+            else:  # Hit the right boundary, move down
+                row += 1
+                direction = -1
+
+        else:  # Moving down-left
+            if row + 1 < n and col - 1 >= 0:
+                row += 1
+                col -= 1
+            elif row + 1 < n:  # Hit the left boundary, move down
+                row += 1
+                direction = 1
+            else:  # Hit the bottom boundary, move right
+                col += 1
+                direction = 1
+
+    return result
