@@ -5,7 +5,6 @@ def spiral_traverse_and_vowels(grid):
     result = []
     vowels = ["a", "e", "i", "o", "u"]
 
-    direction = "right"
     top, bottom = 0, rows - 1
     left, right = 0, cols - 1
     
