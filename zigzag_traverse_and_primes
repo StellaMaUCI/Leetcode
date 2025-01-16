@@ -1,0 +1,32 @@
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def zigzag_traverse_and_primes(matrix):
+    """
+    Perform a zigzag traversal on the matrix and return a dictionary of prime numbers
+    and their 1-based indices in the traversed list.
+
+    Args:
+        matrix (list[list[int]]): The n x n matrix to traverse.
+
+    Returns:
+        dict: A dictionary where keys are 1-based indices and values are prime numbers.
+    """
+    n = len(matrix)
+    traversed_list = []
+
+    for row in range(n):
+        if row % 2 == 0:  # Even row: left to right
+            traversed_list.extend(matrix[row])
+        else:  # Odd row: right to left
+            traversed_list.extend(reversed(matrix[row]))
+
+    # Identify primes and their 1-based indices
+    result = {i + 1: value for i, value in enumerate(traversed_list) if is_prime(value)}
+
+    return result
