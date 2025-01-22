@@ -1,0 +1,19 @@
+def interleave_matrices(matrix_A, matrix_B, submatrix_coords):
+    start_row_A, end_row_A, start_col_A, end_col_A = submatrix_coords[0]
+    start_row_B, end_row_B, start_col_B, end_col_B = submatrix_coords[1]
+
+    submatrix_A = [row[start_col_A - 1:end_col_A] for row in matrix_A[start_row_A - 1:end_row_A]]
+    submatrix_B = [row[start_col_B - 1:end_col_B] for row in matrix_B[start_row_B - 1:end_row_B]]
+
+    num_rows = len(submatrix_A)
+    num_cols = len(submatrix_A[0])  # Since submatrices have equal dimensions
+
+    result_matrix = []
+    for i in range(num_rows):
+        result_row = []
+        for j in range(num_cols):
+            result_row.append(submatrix_A[i][j])
+            result_row.append(submatrix_B[i][j])
+        result_matrix.append(result_row)
+
+    return result_matrix
