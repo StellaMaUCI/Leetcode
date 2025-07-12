@@ -14,7 +14,8 @@ class Solution: # O(n^2) O(n)
         res = []
         nums.sort() #won't change complexity, put duplicate values together
         for i in range(len(nums)-2): # need at least 3 numbers to continue
-            if i > 0 and nums[i] == nums[i-1]:#从第二个开始，跟前一个比 
+            #从第二个开始，跟前一个比。若跟下一个比，三元组中出现重复元素的情况直接pass掉了
+            if i > 0 and nums[i] == nums[i-1]:
                 continue #重复的话就去下一个i
             l, r = i+1, len(nums)-1 #i跟前一个不重复就在i后面设俩指针
             while l < r:
