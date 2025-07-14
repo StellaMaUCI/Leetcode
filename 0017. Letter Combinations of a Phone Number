@@ -27,14 +27,18 @@ class Solution:
         if digits == "":
             return []
         dic = {1: '', 2: 'abc',3: 'def',4: 'ghi',5: 'jkl',6: 'mno',7: 'pqrs',8: 'tuv',9: 'wxyz'}
+        # 初始化q，储存digits中第一位所有字母
         q = deque(dic[int(digits[0])])
         
+        # 从第二个数字开始遍历digits，因为第一个已经进入q了
         for i in range(1,len(digits)):
             length = len(q)
             while length:
-                out = q.popleft()
+                out = q.popleft() # 每轮去掉一个第一个数字代表的字母
+                
+                # 遍历当前数字对应的所有字母
                 for j in dic[int(digits[i])]:
-                    q.append(out + j)
+                    q.append(out + j) # 将取出的组合与新字母拼接，形成新的组合，并添加到队列的右侧
                 length -= 1
                 
         return q
