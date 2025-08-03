@@ -22,14 +22,16 @@ s consists of parentheses only '()[]{}'.
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        dic = {'(': ')', '[':']', '{':"}"}
+        dic = {")": "(", "}": "{", "]": "["}
         stack = []
-        for ch in s: 
-            if ch in dic: 
-                stack.append(ch) # stack stores last emerging opening bracket
-            elif (not stack) or dic[stack.pop()] != ch:  
-                return False 
-        return not stack   # check if the stack still contains unmatched open bracket
+ 
+        for b in s:
+            # 栈非空且为闭括号，且与栈顶括号匹配
+            if stack and b in dic.keys() and dic[b] == stack[-1]:
+                stack.pop()
+            else: # 其他全部压入栈，因为本题说明了测试全部是括号
+                stack.append(b)
+        return not stack
 
 
 class Solution:
